@@ -5,20 +5,33 @@ using UnityEngine;
 public class InGameManager : MonoBehaviour
 {
     public GameObject prefabTile;
+    public GameObject prefabEnemy;
     [SerializeField] GameObject objectGameBoard;
     //GameObject boardTile;
-    List<GameObject> arrBoardTile = new List<GameObject>();
+    public List<GameObject> arrBoardTile = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
         generateTile(7);
+        generateEnemy();
+
+        //for(int i=0;i<49;i++)
+        //{
+        //    Debug.Log(arrBoardTile[i].gameObject.name);
+        //}
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void generateEnemy()
+    {
+        GameObject testEnemy = Instantiate(prefabEnemy);
+        testEnemy.transform.position = new Vector3(0, 0, -2.0f);
     }
 
     void generateTile(int nSideSize)
