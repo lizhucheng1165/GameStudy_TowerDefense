@@ -12,16 +12,23 @@ public class Enemy : MonoBehaviour
     float fDistanceToTargetLocation;
     bool bShouldMove;
     Vector3 vec3MoveVector;
+    Vector3 vec3EnemyStartLocation;
+    [SerializeField] List<GameObject> targetLocationList;
+    int nTargetLocationIndex;
 
     // Start is called before the first frame update
     void Start()
     {
+
         fEnemySpeed = 0.5f;
         bShouldMove = true;
+        nTargetLocationIndex = 0;
         currentInGameManager = GameObject.FindObjectOfType<InGameManager>();
-        vec3MoveTargetLocation = currentInGameManager.arrBoardTile[0].transform.position;
+        vec3EnemyStartLocation = currentInGameManager.arrBoardTile[42].transform.position;
+        vec3MoveTargetLocation = vec3EnemyStartLocation;
         vec3MoveVector = vec3MoveTargetLocation - this.gameObject.transform.position;
 
+        addEnemyTargetLocationList();
     }
 
     // Update is called once per frame
@@ -36,14 +43,15 @@ public class Enemy : MonoBehaviour
 
         if (fDistanceToTargetLocation <= 1.0f)
         {
-            bShouldMove = false;
-        }
+            nTargetLocationIndex++;
 
-        if (bShouldMove == false)
-        {
-            Vector3 vector3Next = currentInGameManager.arrBoardTile[42].transform.position;
+            if(nTargetLocationIndex >= 4)
+            {
+                nTargetLocationIndex = 0;
+            }
+
+            Vector3 vector3Next = targetLocationList[nTargetLocationIndex].transform.position;
             changeTargetLocation(vector3Next);
-            bShouldMove = true;
         }
 
     }
@@ -68,5 +76,12 @@ public class Enemy : MonoBehaviour
         vec3MoveVector = vec3MoveTargetLocation - this.gameObject.transform.position;
     }
 
+    void addEnemyTargetLocationList()
+    {
+        targetLocationList.Add(currentInGameManager.arrBoardTile[42]);
+        targetLocationList.Add(currentInGameManager.arrBoardTile[48]);
+        targetLocationList.Add(currentInGameManager.arrBoardTile[6]);
+        targetLocationList.Add(currentInGameManager.arrBoardTile[0]);
+    }
     
 }

@@ -31,7 +31,7 @@ public class InGameManager : MonoBehaviour
     void generateEnemy()
     {
         GameObject testEnemy = Instantiate(prefabEnemy);
-        testEnemy.transform.position = new Vector3(0, 0, -2.0f);
+        testEnemy.transform.position = new Vector3(-30.0f, 30.0f, -2.0f);
     }
 
     void generateTile(int nSideSize)
