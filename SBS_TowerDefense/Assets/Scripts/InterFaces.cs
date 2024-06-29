@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InterFaces
+public class InterFaces : MonoBehaviour
 {
-
     public interface IBuffAble
     {
         int effectRange { get; set; }
@@ -43,12 +42,12 @@ public class InterFaces
         int currentHealth { get; set; }
         float moveSpeed { get; set; }
         int lootGold { get; set; }
+        GameObject[] wayPoints {get; set;}
 
 
         void InitializeStatus(int waveCount);
         GameObject SetMovePoint(GameObject[] movepoint);
         void MoveToPoint(GameObject movePoint);
         void GiveMoney(int lootGold);
-        void AddTotalHelth(int currentHealth);
     }
 }
