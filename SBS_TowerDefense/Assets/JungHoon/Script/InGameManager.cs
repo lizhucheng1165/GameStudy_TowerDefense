@@ -9,12 +9,15 @@ public class InGameManager : MonoBehaviour
     [SerializeField] GameObject objectGameBoard;
     //GameObject boardTile;
     public List<GameObject> arrBoardTile = new List<GameObject>();
+    int nEnemyGeneratingCount;
 
     // Start is called before the first frame update
     void Start()
     {
+        nEnemyGeneratingCount = 0;
         generateTile(7);
-        generateEnemy();
+        //generateEnemy();
+        startWave();
 
         //for(int i=0;i<49;i++)
         //{
@@ -28,10 +31,24 @@ public class InGameManager : MonoBehaviour
         
     }
 
+    void startWave()
+    {
+        InvokeRepeating("generateEnemy", 0.5f, 1.0f);
+    }
+
     void generateEnemy()
     {
+        
         GameObject testEnemy = Instantiate(prefabEnemy);
         testEnemy.transform.position = new Vector3(-30.0f, 30.0f, -2.0f);
+        nEnemyGeneratingCount++;
+
+        if(nEnemyGeneratingCount >= 3)
+        {
+            CancelInvoke("generateEnemy");
+            nEnemyGeneratingCount = 0;
+        }
+
     }
 
     void generateTile(int nSideSize)
