@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
 
-        fEnemySpeed = 0.5f;
+        fEnemySpeed = 0.2f;
         bShouldMove = true;
         nTargetLocationIndex = 0;
         currentInGameManager = GameObject.FindObjectOfType<InGameManager>();
@@ -54,6 +54,11 @@ public class Enemy : MonoBehaviour
             changeTargetLocation(vector3Next);
         }
 
+    }
+
+    public void destroyCurrentEnemy()
+    {
+        Destroy(this.gameObject);
     }
 
     void moveToTargetLocation(Vector3 vec3MoveVector)
