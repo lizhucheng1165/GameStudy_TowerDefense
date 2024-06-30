@@ -15,4 +15,12 @@ public class Tower : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy") == true)
+        {
+            Debug.Log("enemy entered..");
+        }
+    }
 }
