@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class InGameManager : MonoBehaviour
 {
-    public GameObject prefabTile;
+    public GameObject prefabTowerTile;
+    public GameObject prefabEnemyPathTile;
     public GameObject prefabEnemy;
     [SerializeField] GameObject objectGameBoard;
-    //GameObject boardTile;
+    
     public List<GameObject> arrBoardTile = new List<GameObject>();
     int nEnemyGeneratingCount;
 
@@ -15,14 +16,9 @@ public class InGameManager : MonoBehaviour
     void Start()
     {
         nEnemyGeneratingCount = 0;
-        generateTile(7);
-        //generateEnemy();
+        generateBaseTile(7);
         startWave();
 
-        //for(int i=0;i<49;i++)
-        //{
-        //    Debug.Log(arrBoardTile[i].gameObject.name);
-        //}
     }
 
     // Update is called once per frame
@@ -51,7 +47,7 @@ public class InGameManager : MonoBehaviour
 
     }
 
-    void generateTile(int nSideSize)
+    void generateBaseTile(int nSideSize)
     {
         float fPosX;
         float fPosY;
@@ -68,10 +64,20 @@ public class InGameManager : MonoBehaviour
         {
             for (int j = 0; j < nSideSize; j++)
             {
-                GameObject boardTile = Instantiate(prefabTile);
+                GameObject boardTile;
+                if (fPosX == -30.0f || fPosX == 30.0f || fPosY == 30.0f || fPosY == -30.0f)
+                {
+                    boardTile = Instantiate(prefabEnemyPathTile);
+                }
+                else
+                {
+                    boardTile = Instantiate(prefabTowerTile);
+                }
+                
                 boardTile.transform.SetParent(objectGameBoard.transform);
                 arrBoardTile.Add(boardTile);
                 arrBoardTile[nTileIndex].transform.position = new Vector3(fPosX, fPosY, fPosZ);
+                arrBoardTile[nTileIndex].name = "baseTile" + nTileIndex;
                 fPosX += fAddPos;
                 nTileIndex++;
             }
@@ -79,4 +85,5 @@ public class InGameManager : MonoBehaviour
             fPosY -= fAddPos;
         }
     }
+
 }

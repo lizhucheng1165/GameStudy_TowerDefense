@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
     {
 
         fDistanceToTargetLocation = Vector2.Distance(this.gameObject.transform.position, vec3MoveTargetLocation);
-        Debug.Log(fDistanceToTargetLocation);
+        //Debug.Log(fDistanceToTargetLocation);
 
     }
 
