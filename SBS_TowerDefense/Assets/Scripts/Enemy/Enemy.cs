@@ -11,19 +11,10 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
     public GameObject[] wayPoints { get; set; }
     private GameObject wayPointsMother;
     private int wayPointIndex;
-    public int wayPointIndexSrc;
+    protected int wayPointIndexSrc;
+    protected GameObject currentTargetWayPoint;
 
 
-    private void Awake()
-    {
-        wayPointIndex = wayPointIndexSrc % 4;
-
-
-    }
-    private void Update()
-    {
-        
-    }
     public void GiveMoney(int lootGold)
     {
 
@@ -46,11 +37,13 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
     }
     public void MoveToPoint(GameObject movePoint)
     {
-        this.transform.Translate(movePoint.transform.position);
+        Vector3 MovingPosition = Vector3.MoveTowards(this.transform.position, movePoint.transform.position, 0.005f * moveSpeed);
+        this.transform.position = MovingPosition;
     }
 
     public GameObject SetMovePoint(GameObject[] movePoints)
     {
+        wayPointIndex = wayPointIndexSrc % 4;
         switch (wayPointIndex)
         {
             case 0:
@@ -68,6 +61,18 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
 
     }
 
-    
+    public void AddWayPointIndex()
+    {
+        if (Vector3.Distance(currentTargetWayPoint.transform.position, this.transform.position) <= 0)
+        {
+            wayPointIndexSrc++;
+        }
+    }
+    public void MoveArround()
+    {
+        currentTargetWayPoint = SetMovePoint(wayPoints);
+        MoveToPoint(currentTargetWayPoint);
+        AddWayPointIndex();
+    }
 }
 
