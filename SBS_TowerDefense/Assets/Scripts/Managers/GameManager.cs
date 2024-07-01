@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    int spawnCount;
-    float spawnInterval;
+    public int spawnCount { get; set; }
+    public float spawnInterval{get; set;}
     int waveCount;
     int money;
     int enemyCount;
@@ -14,4 +14,6 @@ public class GameManager : MonoBehaviour
     void InitalizeMainMap() { }
     void GameWin() { }
     void GameLose() { }
+
+    
 }

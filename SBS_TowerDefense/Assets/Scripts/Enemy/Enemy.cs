@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyType { NOMAL, SPEED, TANKER, BOSS, MIXED}
 public class Enemy : MonoBehaviour, InterFaces.IEnemy
 {
     public int maxHealth { get; set; }
     public int currentHealth { get; set; }
     public float moveSpeed { get; set; }
     public int lootGold { get; set; }
+
     public GameObject[] wayPoints { get; set; }
-    private GameObject wayPointsMother;
-    private int wayPointIndex;
+    protected GameObject wayPointsMother;
+    protected int wayPointIndex;
     protected int wayPointIndexSrc;
     protected GameObject currentTargetWayPoint;
+
+    protected EnemyType enemyType;
 
 
     public void GiveMoney(int lootGold)
@@ -74,5 +78,6 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
         MoveToPoint(currentTargetWayPoint);
         AddWayPointIndex();
     }
+
 }
 
