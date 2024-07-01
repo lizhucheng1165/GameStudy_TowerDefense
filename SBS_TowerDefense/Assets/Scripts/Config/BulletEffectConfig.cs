@@ -2,17 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletEffectConfig : MonoBehaviour
+[CreateAssetMenu(fileName = "BulletEffectConfig", menuName = "ScriptableObjects/BulletEffectConfig", order = 1)]
+public class BulletEffectConfig : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private List<BulletEffect> m_bulletEffects;
 }

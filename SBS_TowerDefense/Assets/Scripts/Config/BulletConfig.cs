@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletConfig : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+[CreateAssetMenu(fileName = "BulletConfig", menuName = "ScriptableObjects/BulletConfig", order = 1)]
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public class BulletConfig : ScriptableObject
+{
+    [SerializeField] private List<Bullet> m_bullets;
 }

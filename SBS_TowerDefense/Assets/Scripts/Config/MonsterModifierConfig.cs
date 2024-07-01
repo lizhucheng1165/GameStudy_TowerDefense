@@ -1,18 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class MonsterModifierConfig : MonoBehaviour
+[CreateAssetMenu(fileName = "MonsterModifierConfig", menuName = "ScriptableObjects/MonsterModifierConfig", order = 1)]
+public class MonsterModifierConfig : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private List<MonsterModifier> m_monsterModifiers;
 }
