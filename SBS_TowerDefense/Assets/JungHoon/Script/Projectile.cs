@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     public GameObject myParentGameObject;
     public GameObject myTarget;
     Vector3 vec3MoveVector;
+    float fDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,11 @@ public class Projectile : MonoBehaviour
         {
             moveToTarget();
         }
+    }
+
+    public void initMyDamage(float fInputDamage)
+    {
+        fDamage = fInputDamage;
     }
 
     public void calculateMoveVector()
@@ -42,7 +48,7 @@ public class Projectile : MonoBehaviour
             myTarget = null;
             this.gameObject.SetActive(false);
 
-            other.gameObject.GetComponent<Enemy>().destroyCurrentEnemy();
+            other.gameObject.GetComponent<Enemy>().minusMyHealth(fDamage);
             
         }
     }

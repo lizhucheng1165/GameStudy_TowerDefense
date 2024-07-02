@@ -8,15 +8,21 @@ public class Tower : MonoBehaviour
     [SerializeField] GameObject prefabProjectile;
     GameObject myProjectile;
     [SerializeField] GameObject currentTargetEnemy;
+    float fShootDelayTime;
+    bool bCanShoot;
+    Coroutine coroutine;
 
     // Start is called before the first frame update
     void Start()
     {
         myProjectile = Instantiate(prefabProjectile);
+        myProjectile.GetComponent<Projectile>().initMyDamage(1.0f);
         myProjectile.GetComponent<Projectile>().myParentGameObject = this.gameObject;
         myProjectile.gameObject.transform.SetParent(this.gameObject.transform);
         myProjectile.gameObject.transform.localPosition = Vector3.zero;
         myProjectile.SetActive(false);
+        fShootDelayTime = 1.0f;
+        bCanShoot = true;
     }
 
     // Update is called once per frame
@@ -25,16 +31,35 @@ public class Tower : MonoBehaviour
         
     }
 
+    IEnumerator waitForShootableStatus(float fWaitTime)
+    {
+        yield return new WaitForSeconds(fWaitTime);
+        bCanShoot = true;
+        Debug.Log("now can shoot!");
+    }
+
     void shootProjectile(GameObject currentTargetGameObject)
     {
         myProjectile.SetActive(true);
         myProjectile.GetComponent<Projectile>().myTarget = currentTargetGameObject;
         myProjectile.GetComponent<Projectile>().calculateMoveVector();
+        bCanShoot = false;
+        coroutine = StartCoroutine(waitForShootableStatus(fShootDelayTime));
+        //waitForShootableStatus(fShootDelayTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (currentTargetEnemy == null && other.CompareTag("Enemy") == true)
+    //    {
+    //        currentTargetEnemy = other.gameObject;
+    //        shootProjectile(currentTargetEnemy);
+    //    }
+    //}
+
+    private void OnTriggerStay(Collider other)
     {
-        if (currentTargetEnemy == null && other.CompareTag("Enemy") == true)
+        if (other.CompareTag("Enemy") == true && bCanShoot == true)
         {
             currentTargetEnemy = other.gameObject;
             shootProjectile(currentTargetEnemy);
@@ -46,6 +71,7 @@ public class Tower : MonoBehaviour
         if (other.gameObject == currentTargetEnemy)
         {
             currentTargetEnemy = null;
+            StopCoroutine(coroutine);
         }
     }
 }

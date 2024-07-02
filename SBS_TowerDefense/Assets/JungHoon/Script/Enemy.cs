@@ -16,11 +16,12 @@ public class Enemy : MonoBehaviour
     Vector3 vec3EnemyStartLocation;
     [SerializeField] List<GameObject> targetLocationList;
     int nTargetLocationIndex;
+    float fCurrentHealth;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        fCurrentHealth = 3.0f;
         fEnemySpeed = 0.2f;
         bShouldMove = true;
         nTargetLocationIndex = 0;
@@ -57,6 +58,15 @@ public class Enemy : MonoBehaviour
             changeTargetLocation(vector3Next);
         }
 
+    }
+
+    public void minusMyHealth(float fDamage)
+    {
+        fCurrentHealth -= fDamage;
+        if(fCurrentHealth <= 0f)
+        {
+            destroyCurrentEnemy();
+        }
     }
 
     public void destroyCurrentEnemy()
