@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class InGameManager : MonoBehaviour
     int nCurrentGold;
     int nEnemyKilled;
     int nLeftEnemy;
+    int nMaxEnemyCount;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +46,10 @@ public class InGameManager : MonoBehaviour
     public void addEnemyKilled()
     {
         nEnemyKilled++;
+        if(nEnemyKilled  == nMaxEnemyCount)
+        {
+            gotoResultScene();
+        }
     }
 
     public int getCurrentEnemyKilled()
@@ -74,6 +80,7 @@ public class InGameManager : MonoBehaviour
         nEnemyGeneratingCount = 0;
         nEnemyKilled = 0;
         nLeftEnemy = 0;
+        nMaxEnemyCount = 5;
     }
 
     void startWave()
@@ -89,7 +96,7 @@ public class InGameManager : MonoBehaviour
         nEnemyGeneratingCount++;
         addLeftEnemyCount();
 
-        if(nEnemyGeneratingCount >= 3)
+        if(nEnemyGeneratingCount >= nMaxEnemyCount)
         {
             CancelInvoke("generateEnemy");
             nEnemyGeneratingCount = 0;
@@ -134,6 +141,10 @@ public class InGameManager : MonoBehaviour
             fPosX = -30.0f;
             fPosY -= fAddPos;
         }
+    }
+    public void gotoResultScene()
+    {
+        SceneManager.LoadScene("Junghoon/Scene/PJH_Scene_Result");
     }
 
 }

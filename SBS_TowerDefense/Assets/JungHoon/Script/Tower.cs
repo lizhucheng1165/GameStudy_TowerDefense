@@ -9,7 +9,7 @@ public class Tower : MonoBehaviour
     GameObject myProjectile;
     [SerializeField] GameObject currentTargetEnemy;
     float fShootDelayTime;
-    bool bCanShoot;
+    [SerializeField] bool bCanShoot;
     Coroutine coroutine;
 
     // Start is called before the first frame update
@@ -45,24 +45,30 @@ public class Tower : MonoBehaviour
         myProjectile.GetComponent<Projectile>().calculateMoveVector();
         bCanShoot = false;
         coroutine = StartCoroutine(waitForShootableStatus(fShootDelayTime));
-        //waitForShootableStatus(fShootDelayTime);
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (currentTargetEnemy == null && other.CompareTag("Enemy") == true)
-    //    {
-    //        currentTargetEnemy = other.gameObject;
-    //        shootProjectile(currentTargetEnemy);
-    //    }
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (currentTargetEnemy == null && other.CompareTag("Enemy") == true)
+        {
+            currentTargetEnemy = other.gameObject;
+            //shootProjectile(currentTargetEnemy);
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Enemy") == true && bCanShoot == true)
+        if (currentTargetEnemy == null && other.CompareTag("Enemy") == true)
         {
             currentTargetEnemy = other.gameObject;
+            //shootProjectile(currentTargetEnemy);
+        }
+
+        if (currentTargetEnemy != null && bCanShoot == true)
+        {
+            //currentTargetEnemy = other.gameObject;
             shootProjectile(currentTargetEnemy);
+            //coroutine = StartCoroutine(waitForShootableStatus(fShootDelayTime));
         }
     }
 
@@ -71,7 +77,7 @@ public class Tower : MonoBehaviour
         if (other.gameObject == currentTargetEnemy)
         {
             currentTargetEnemy = null;
-            StopCoroutine(coroutine);
+            //StopCoroutine(coroutine);
         }
     }
 }
