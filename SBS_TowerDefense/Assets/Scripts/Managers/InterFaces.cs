@@ -31,7 +31,7 @@ public class InterFaces : MonoBehaviour
         int attackRange { get; set; }
 
         GameObject FindClosestEnemy(GameObject[] enemiesInRange);
-        GameObject[] FindEnemiesInRange(GameObject[] enemiesInRange);
+        GameObject[] FindEnemiesInRange(GameObject[] enemiesInRange, LayerMask mask);
         void LookAtTarget(GameObject target);
         void ShootProjectile();
     }

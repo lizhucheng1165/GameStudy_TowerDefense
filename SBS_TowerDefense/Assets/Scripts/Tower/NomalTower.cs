@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class NomalTower : AttackTower
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        attackPower = 2.0f;
+        price = 5;
+        attackRange = 3;
+        attackSpeed = 1;
+        towerType = TowerType.NOMAL;
+        UpgradeAble = true;
     }
 }

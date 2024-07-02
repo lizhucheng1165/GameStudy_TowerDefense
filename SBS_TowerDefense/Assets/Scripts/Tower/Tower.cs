@@ -4,14 +4,14 @@ using UnityEngine;
 
 public enum TowerType { NOMAL, CHAIN, SNIPER, POWERBUFF, SLOW}
 
-public abstract class Tower : MonoBehaviour
+public class Tower : MonoBehaviour
 {
-    int price;
-    int level;
-    bool UpgradeAble;
-    TowerType towerType;
-    int usedMoneyToUpgrade;
-    
+    public int price { get; set; }
+    public int level { get; set; }
+    public bool UpgradeAble { get; set; }
+    public TowerType towerType { get; set; }
+    public int usedMoneyToUpgrade { get; set; }
+    public LayerMask mask;
     public virtual void InitializeStatus(TowerType type)
     {
 
