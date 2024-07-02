@@ -9,34 +9,39 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private GameObject enemyPrefab;
     public WaveData[] waveData;
-    public int waveIndex;
+    private int waveIndex;
+    public int WaveIndex
+    {
+        get { return waveIndex; }
+        set
+        {
+            if (waveIndex < 4)
+            {
+                waveIndex = value;
+            }
+        }
+    }
+    public float waveElapsedTime;
     private void Awake()
     {
-        waveIndex = 0;
+        WaveIndex = 0;
         GameManager.Instance.spawnInterval = 1.0f;
         spawnPoint = this.transform.position;
-        //enemyPrefab = waveData[waveIndex].EnemyPreFabs[(int)waveData[waveIndex].WaveEnemyType];
-        //InvokeRepeating("SpawnEnemy", 0.3f, 1.0f);
+        waveElapsedTime = 0;
+        StartSpawnCurrentWave();
     }
 
     void Update()
     {
-        enemyPrefab = waveData[waveIndex].EnemyPreFabs[(int)waveData[waveIndex].WaveEnemyType];
+        enemyPrefab = GetWavePrefab();
 
-        if (GameManager.Instance.spawnCount >= waveData[waveIndex].EnemySpawnMaxCount)
+        if (GameManager.Instance.spawnCount >= waveData[WaveIndex].EnemySpawnMaxCount)
         {
-            CancelInvoke("SpawnEnemy");
-            GameManager.Instance.spawnCount = 0;
+            StopSpawning();
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (UpdateElapsedTime())
         {
-            print("스폰시작");
-            InvokeRepeating("SpawnEnemy", 0.3f, 1.0f);
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            print("웨이브인덱스 증가");
-            waveIndex++;
+            StartSpawnCurrentWave();
         }
     }
    
@@ -45,5 +50,49 @@ public class EnemySpawner : MonoBehaviour
         Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
         GameManager.Instance.spawnCount++;
     }
-    
+    private void StopSpawning()
+    {
+        CancelInvoke("SpawnEnemy");
+        GameManager.Instance.spawnCount = 0;
+        AddWaveIndex();
+    }
+
+    private void StartSpawnCurrentWave()
+    {
+        InvokeRepeating("SpawnEnemy", 0.3f, GameManager.Instance.spawnInterval);
+    }
+
+    private bool UpdateElapsedTime()
+    {
+        if (waveElapsedTime >= GameManager.Instance.waveInterval)
+        {
+            waveElapsedTime = 0;
+            return true;
+        }
+
+        waveElapsedTime += Time.deltaTime;
+        
+
+        return false;
+    }
+    private void AddWaveIndex()
+    {
+        print("웨이브인덱스 증가");
+        WaveIndex++;
+    }
+
+    private GameObject GetWavePrefab()
+    {
+        return waveData[WaveIndex].EnemyPreFabs[GetCurrentWaveEnemyTypeNumber()];
+    }
+
+    private int GetCurrentWaveEnemyTypeNumber()
+    {
+        if (waveData[WaveIndex].WaveEnemyType == EnemyType.MIXED)
+        {
+            return Random.Range(0, 3);
+        }
+
+        return (int)waveData[WaveIndex].WaveEnemyType;
+    }
 }
