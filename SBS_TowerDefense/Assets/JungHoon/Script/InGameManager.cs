@@ -8,11 +8,14 @@ public class InGameManager : MonoBehaviour
     public GameObject prefabEnemyPathTile;
     public GameObject prefabEnemy;
     [SerializeField] GameObject objectGameBoard;
+    [SerializeField] UIManager currentUIManager;
 
     public List<GameObject> arrBoardTile = new List<GameObject>();
     int nEnemyGeneratingCount;
 
     int nCurrentGold;
+    int nEnemyKilled;
+    int nLeftEnemy;
 
     // Start is called before the first frame update
     void Start()
@@ -38,10 +41,39 @@ public class InGameManager : MonoBehaviour
         nCurrentGold += nAddValue;
     }
 
+    public void addEnemyKilled()
+    {
+        nEnemyKilled++;
+    }
+
+    public int getCurrentEnemyKilled()
+    {
+        return nEnemyKilled;
+    }
+
+    public int getCurrentLeftEnemy()
+    {
+        return nLeftEnemy;
+    }
+
+    void addLeftEnemyCount()
+    {
+        nLeftEnemy++;
+        currentUIManager.updateCurrentLeftEnemy();
+    }
+
+    public void minusLeftEnemyCount()
+    {
+        nLeftEnemy--;
+        currentUIManager.updateCurrentLeftEnemy();
+    }
+
     void initGameStatus()
     {
         nCurrentGold = 0;
         nEnemyGeneratingCount = 0;
+        nEnemyKilled = 0;
+        nLeftEnemy = 0;
     }
 
     void startWave()
@@ -55,6 +87,7 @@ public class InGameManager : MonoBehaviour
         GameObject testEnemy = Instantiate(prefabEnemy);
         testEnemy.transform.position = new Vector3(-30.0f, 30.0f, -2.0f);
         nEnemyGeneratingCount++;
+        addLeftEnemyCount();
 
         if(nEnemyGeneratingCount >= 3)
         {

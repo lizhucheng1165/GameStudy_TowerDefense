@@ -63,12 +63,14 @@ public class Enemy : MonoBehaviour
     {
         currentInGameManager.addCurrentGold(10);
         currentUIManager.updateCurrentGoldStat();
+        currentInGameManager.addEnemyKilled();
+        currentUIManager.updateCurrentEnemyKilled();
+        currentInGameManager.minusLeftEnemyCount();
         Destroy(this.gameObject);
     }
 
     void moveToTargetLocation(Vector3 vec3MoveVector)
     {
-        //this.gameObject.transform.Translate(vec3MoveTargetLocation * Time.deltaTime * fEnemySpeed);
         this.gameObject.transform.position += new Vector3(vec3MoveVector.x * Time.deltaTime * fEnemySpeed, vec3MoveVector.y * Time.deltaTime * fEnemySpeed, 0f);
     }
 
@@ -76,7 +78,6 @@ public class Enemy : MonoBehaviour
     {
 
         fDistanceToTargetLocation = Vector2.Distance(this.gameObject.transform.position, vec3MoveTargetLocation);
-        //Debug.Log(fDistanceToTargetLocation);
 
     }
 

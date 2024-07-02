@@ -39,4 +39,15 @@ public class UIManager : MonoBehaviour
     {
         textCurrentGold.text = currentInGameManager.getCurrentGold().ToString();
     }
+
+    public void updateCurrentEnemyKilled()
+    {
+        textEnemyKilled.text = currentInGameManager.getCurrentEnemyKilled().ToString();
+    }
+
+    public void updateCurrentLeftEnemy()
+    {
+        textLeftEnemy.text = currentInGameManager.getCurrentLeftEnemy().ToString();
+    }
+
 }
