@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
     public void MoveToPoint(GameObject movePoint)
     {
         Vector3 MovingPosition = Vector3.MoveTowards(this.transform.position, movePoint.transform.position, 0.005f * moveSpeed);
+        LookAtTargetPoint(MovingPosition);
         this.transform.position = MovingPosition;
     }
 
@@ -79,5 +80,9 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
         AddWayPointIndex();
     }
 
+    public void LookAtTargetPoint(Vector3 targetPoint)
+    {
+        transform.LookAt(targetPoint);
+    }
 }
 
