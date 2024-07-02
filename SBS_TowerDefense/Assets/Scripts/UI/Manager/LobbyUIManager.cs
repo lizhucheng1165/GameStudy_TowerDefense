@@ -4,39 +4,33 @@ using UnityEngine;
 
 public class LobbyUIManager : MonoBehaviour
 {
+    Canvas canvas;
+    GameObject titlePanel;
+    GameObject difficultyPanel;
+
+    private void Awake()
+    {
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        titlePanel = Resources.Load<GameObject>("Prefabs/UI/Lobby/Panel_Title");
+        difficultyPanel = Resources.Load<GameObject>("Prefabs/UI/Lobby/Panel_Difficulty");
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        titlePanel = Instantiate(titlePanel, Vector3.zero, Quaternion.identity);
+        titlePanel.transform.SetParent(canvas.transform, false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 마우스 좌클릭 감지
-        if (Input.GetMouseButtonDown(0))
-        {
-            showDifficultyUI();
-        }
-        // 마우스 우클릭 감지
-        else if (Input.GetMouseButtonDown(1))
-        {
-            showDifficultyUI();
-        }
-        // 아무 키보드 입력 감지
-        if (Input.anyKeyDown)
-        {
-            showDifficultyUI();
-        }
+
     }
 
     public void showDifficultyUI()
     {
-        GameObject titlePanel = GameObject.Find("Panel_Title");
-
-        if (titlePanel != null)
-        {
-            titlePanel.SetActive(false);
-        }
+        Destroy(titlePanel);
+        difficultyPanel = Instantiate(difficultyPanel, Vector3.zero, Quaternion.identity);
+        difficultyPanel.transform.SetParent(canvas.transform, false);
     }
 }

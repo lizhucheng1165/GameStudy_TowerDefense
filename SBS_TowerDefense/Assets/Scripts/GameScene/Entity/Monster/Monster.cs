@@ -27,4 +27,32 @@ public class Monster : MonoBehaviour
     public float moveSpeed { get { return m_moveSpeed; } set { m_moveSpeed = value; } }
     public float damageReduceMultiplier { get { return m_damageReduceMultiplier; } set { m_damageReduceMultiplier = value; } }
     public float statusEffectReduceMultiplier { get { return m_statusEffectReduceMultiplier; } set { m_statusEffectReduceMultiplier = value; } }
+
+    private Transform[] waypoints;
+    private int currentWaypoint = 0;
+
+    private void Awake()
+    {
+        waypoints = new Transform[4];
+        for (int i = 0; i < 4; i++)
+        {
+            waypoints[i] = GameObject.Find("Waypoint_"+i).transform;
+        }
+    }
+
+    private void Update()
+    {
+        // 현재 웨이포인트로 이동
+        transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, m_moveSpeed * Time.deltaTime);
+
+        // 현재 웨이포인트에 도착하면 다음 웨이포인트로 이동
+        if (transform.position == waypoints[currentWaypoint].position)
+        {
+            currentWaypoint++;
+            if (currentWaypoint >= waypoints.Length)
+            {
+                currentWaypoint = 0; // 마지막 웨이포인트에 도달하면 처음으로 돌아감
+            }
+        }
+    }
 }

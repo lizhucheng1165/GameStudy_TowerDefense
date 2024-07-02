@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField] private float m_positionX;
-    [SerializeField] private float m_positionZ;
+    [SerializeField] private int m_positionX;
+    [SerializeField] private int m_positionZ;
+    [SerializeField] private bool m_isBuildable;
+    [SerializeField] private bool m_isSpawnable;
 
-    public float positionX { get { return m_positionX; } set { m_positionX = value; } }
-    public float positionY { get { return m_positionZ; } set { m_positionZ = value; } }
+    public int positionX { get {return m_positionX; } set { m_positionX = value; } }
+    public int positionZ { get {return m_positionZ; } set { m_positionZ = value; } }
+    public bool isBuildable { get { return m_isBuildable; } set { m_isBuildable = value; } }
+    public bool isSpawnable { get { return m_isSpawnable; } set { m_isSpawnable = value; } }
+
     // Start is called before the first frame update
     void Start()
     {
