@@ -7,7 +7,8 @@ public class Enemy : MonoBehaviour
 {
 
     Vector3 vec3MoveTargetLocation;
-    InGameManager currentInGameManager;
+    [SerializeField] InGameManager currentInGameManager;
+    [SerializeField] UIManager currentUIManager;
     float fEnemySpeed;
     float fDistanceToTargetLocation;
     bool bShouldMove;
@@ -29,6 +30,8 @@ public class Enemy : MonoBehaviour
         vec3MoveVector = vec3MoveTargetLocation - this.gameObject.transform.position;
 
         addEnemyTargetLocationList();
+
+        currentUIManager = GameObject.FindObjectOfType<UIManager>();
     }
 
     // Update is called once per frame
@@ -58,6 +61,8 @@ public class Enemy : MonoBehaviour
 
     public void destroyCurrentEnemy()
     {
+        currentInGameManager.addCurrentGold(10);
+        currentUIManager.updateCurrentGoldStat();
         Destroy(this.gameObject);
     }
 

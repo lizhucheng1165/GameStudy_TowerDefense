@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     void Start()
     {
         //this.gameObject.transform.position = Vector3.zero;
+        
     }
 
     // Update is called once per frame

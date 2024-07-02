@@ -8,23 +8,40 @@ public class InGameManager : MonoBehaviour
     public GameObject prefabEnemyPathTile;
     public GameObject prefabEnemy;
     [SerializeField] GameObject objectGameBoard;
-    
+
     public List<GameObject> arrBoardTile = new List<GameObject>();
     int nEnemyGeneratingCount;
+
+    int nCurrentGold;
 
     // Start is called before the first frame update
     void Start()
     {
-        nEnemyGeneratingCount = 0;
+        initGameStatus();
         generateBaseTile(7);
         startWave();
-
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public int getCurrentGold()
+    {
+        return nCurrentGold;
+    }
+
+    public void addCurrentGold(int nAddValue)
+    {
+        nCurrentGold += nAddValue;
+    }
+
+    void initGameStatus()
+    {
+        nCurrentGold = 0;
+        nEnemyGeneratingCount = 0;
     }
 
     void startWave()
