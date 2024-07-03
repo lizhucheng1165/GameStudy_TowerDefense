@@ -35,7 +35,7 @@ public class Tower : MonoBehaviour
     {
         yield return new WaitForSeconds(fWaitTime);
         bCanShoot = true;
-        Debug.Log("now can shoot!");
+        //Debug.Log("now can shoot!");
     }
 
     void shootProjectile(GameObject currentTargetGameObject)

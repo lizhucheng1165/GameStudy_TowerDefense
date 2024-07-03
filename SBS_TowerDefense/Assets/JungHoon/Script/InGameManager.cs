@@ -10,9 +10,10 @@ public class InGameManager : MonoBehaviour
     public GameObject prefabEnemy;
     [SerializeField] GameObject objectGameBoard;
     [SerializeField] UIManager currentUIManager;
+    [SerializeField] WaveManager currentWaveManager;
 
     public List<GameObject> arrBoardTile = new List<GameObject>();
-    int nEnemyGeneratingCount;
+    //int nEnemyGeneratingCount;
 
     int nCurrentGold;
     int nEnemyKilled;
@@ -21,15 +22,15 @@ public class InGameManager : MonoBehaviour
     int nCurrentWave;
     int nLastWave;
 
-    public List<Wave> arGameWaveList = new List<Wave>();
+    //public List<Wave> arGameWaveList = new List<Wave>();
 
     // Start is called before the first frame update
     void Start()
     {
         initGameStatus();
-        initGameWaveInfo(nLastWave);
+        //currentWaveManager.initGameWaveInfo(nLastWave);
         generateBaseTile(7);
-        startWave();
+        //startWave();
         
     }
 
@@ -58,6 +59,27 @@ public class InGameManager : MonoBehaviour
         }
     }
 
+    public void setMaxEnemyCount(int inputMaxEnemyCount)
+    {
+        nMaxEnemyCount = inputMaxEnemyCount;
+        Debug.Log("nMaxEnemyCount: " + nMaxEnemyCount);
+    }
+
+    public int getMaxEnemyCount()
+    {
+        return nMaxEnemyCount;
+    }
+
+    public void addCurrentWaveNumber()
+    {
+        nCurrentWave++;
+    }
+
+    public int getCurrentWaveNumber()
+    {
+        return nCurrentWave;
+    }
+
     public int getCurrentEnemyKilled()
     {
         return nEnemyKilled;
@@ -68,15 +90,10 @@ public class InGameManager : MonoBehaviour
         return nLeftEnemy;
     }
 
-    void addLeftEnemyCount()
+    public void addLeftEnemyCount()
     {
         nLeftEnemy++;
         currentUIManager.updateCurrentLeftEnemy();
-    }
-
-    public int getCurrentWave()
-    {
-        return nCurrentWave;
     }
 
     public int getLastWave()
@@ -93,55 +110,56 @@ public class InGameManager : MonoBehaviour
     void initGameStatus()
     {
         nCurrentGold = 0;
-        nEnemyGeneratingCount = 0;
+        //nEnemyGeneratingCount = 0;
         nEnemyKilled = 0;
         nLeftEnemy = 0;
-        nMaxEnemyCount = 5;
+        nMaxEnemyCount = 0;
         nCurrentWave = 0;
         nLastWave = 5;
     }
 
-    void initGameWaveInfo(int nLastWaveCount)
-    {
-        int nWaveCount = 0;
-        while (nWaveCount < nLastWaveCount)
-        {
-            Wave newWave = new Wave();
-            newWave.nMyWaveNumber = nWaveCount;
-            newWave.nCreateEnemyCount = 3;
-            arGameWaveList.Add(newWave);
-            nWaveCount++;
-            Debug.Log(newWave.nMyWaveNumber + " newWave created and added..");
-        }
-    }
+    //void initGameWaveInfo(int nLastWaveCount)
+    //{
+    //    int nWaveCount = 0;
+    //    while (nWaveCount < nLastWaveCount)
+    //    {
+    //        Wave newWave = new Wave();
+    //        newWave.nMyWaveNumber = nWaveCount;
+    //        newWave.nCreateEnemyCount = 3;
+    //        arGameWaveList.Add(newWave);
+    //        nWaveCount++;
+    //        Debug.Log(newWave.nMyWaveNumber + " newWave created and added..");
+    //    }
+    //}
 
-    void startWave()
-    {
-        nCurrentWave++;
-        currentUIManager.updateCurrentWave();
+    //public void startWave()
+    //{
+    //    nCurrentWave++;
+    //    currentUIManager.updateCurrentWave();
         
-        int nWaveListIndex;
+    //    int nWaveListIndex;
 
-        nWaveListIndex = nCurrentWave - 1;
-        nMaxEnemyCount = arGameWaveList[nWaveListIndex].nCreateEnemyCount;
-        InvokeRepeating("generateEnemy", 0.5f, 1.0f);
-    }
+    //    nWaveListIndex = nCurrentWave - 1;
+    //    nMaxEnemyCount = currentWaveManager.arGameWaveList[nWaveListIndex].nCreateEnemyCount;
 
-    void generateEnemy()
-    {
+    //    InvokeRepeating("generateEnemy", 0.5f, 1.0f);
+    //}
+
+    //void generateEnemy()
+    //{
         
-        GameObject testEnemy = Instantiate(prefabEnemy);
-        testEnemy.transform.position = new Vector3(-30.0f, 30.0f, -2.0f);
-        nEnemyGeneratingCount++;
-        addLeftEnemyCount();
+    //    GameObject testEnemy = Instantiate(prefabEnemy);
+    //    testEnemy.transform.position = new Vector3(-30.0f, 30.0f, -2.0f);
+    //    nEnemyGeneratingCount++;
+    //    addLeftEnemyCount();
 
-        if(nEnemyGeneratingCount >= nMaxEnemyCount)
-        {
-            CancelInvoke("generateEnemy");
-            nEnemyGeneratingCount = 0;
-        }
+    //    if(nEnemyGeneratingCount >= nMaxEnemyCount)
+    //    {
+    //        CancelInvoke("generateEnemy");
+    //        nEnemyGeneratingCount = 0;
+    //    }
 
-    }
+    //}
 
     void generateBaseTile(int nSideSize)
     {

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] InGameManager currentInGameManager;
+    [SerializeField] WaveManager currentWaveManager;
     [SerializeField] Text textCurrentGold;
     [SerializeField] Text textLeftEnemy;
     [SerializeField] Text textLifeCapacity;
@@ -31,7 +32,7 @@ public class UIManager : MonoBehaviour
         textLeftEnemy.text = 0.ToString();
         textLifeCapacity.text = 0.ToString();
         textEnemyKilled.text = 0.ToString();
-        textCurrentWave.text = currentInGameManager.getCurrentWave().ToString();
+        textCurrentWave.text = currentWaveManager.getCurrentWaverNumber().ToString();
         textLastWave.text = currentInGameManager.getLastWave().ToString();
     }
 
@@ -52,7 +53,9 @@ public class UIManager : MonoBehaviour
 
     public void updateCurrentWave()
     {
-        textCurrentWave.text = currentInGameManager.getCurrentWave().ToString();
+        //textCurrentWave.text = currentInGameManager.getCurrentWaveNumber().ToString();
+        //Debug.Log("wave num:" + currentWaveManager.getCurrentWaverNumber().ToString());
+        textCurrentWave.text = currentWaveManager.getCurrentWaverNumber().ToString();
     }
     
     public void updateLastWave()
