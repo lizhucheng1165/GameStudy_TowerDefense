@@ -893,8 +893,9 @@ GameObject:
   - component: {fileID: 1112069409}
   - component: {fileID: 1112069408}
   - component: {fileID: 1112069407}
+  - component: {fileID: 1112069410}
   m_Layer: 5
-  m_Name: SpeedTowerButton
+  m_Name: SlowTowerButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1002,6 +1003,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112069405}
   m_CullTransparentMesh: 1
+--- !u!114 &1112069410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112069405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e11eff1ac90e8459175e0b10d2f173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 1673660005}
+  - {fileID: 13205295}
+  - {fileID: 1470575067}
+  towerType: 4
 --- !u!1 &1123000357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,6 +1144,7 @@ GameObject:
   - component: {fileID: 1163413878}
   - component: {fileID: 1163413877}
   - component: {fileID: 1163413876}
+  - component: {fileID: 1163413879}
   m_Layer: 5
   m_Name: SniperTowerButton
   m_TagString: Untagged
@@ -1235,6 +1254,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163413874}
   m_CullTransparentMesh: 1
+--- !u!114 &1163413879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163413874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e11eff1ac90e8459175e0b10d2f173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 1673660005}
+  - {fileID: 13205295}
+  - {fileID: 1470575067}
+  towerType: 2
 --- !u!1 &1165714131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,7 +1283,7 @@ GameObject:
   - component: {fileID: 1165714135}
   - component: {fileID: 1165714134}
   - component: {fileID: 1165714137}
-  - component: {fileID: 1165714136}
+  - component: {fileID: 1165714138}
   m_Layer: 5
   m_Name: NomalTowerButton
   m_TagString: Untagged
@@ -1313,22 +1349,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165714131}
   m_CullTransparentMesh: 1
---- !u!114 &1165714136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1165714131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ee501b25666d71479698f777356232c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  test:
-  - {fileID: 1673660005}
-  - {fileID: 13205295}
-  - {fileID: 1470575067}
 --- !u!114 &1165714137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1373,6 +1393,23 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1165714138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165714131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e11eff1ac90e8459175e0b10d2f173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 1673660005}
+  - {fileID: 13205295}
+  - {fileID: 1470575067}
+  towerType: 0
 --- !u!1 &1196903720
 GameObject:
   m_ObjectHideFlags: 0

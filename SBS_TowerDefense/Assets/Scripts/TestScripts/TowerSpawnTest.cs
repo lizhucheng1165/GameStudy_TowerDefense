@@ -11,7 +11,7 @@ public class TowerSpawnTest : MonoBehaviour
         button = GetComponent<Button>();
         foreach (var item in test)
         {
-            button.onClick.AddListener(item.OnClicked);
+            button.onClick.AddListener(item.OnNomalSelected);
         }
         
     }

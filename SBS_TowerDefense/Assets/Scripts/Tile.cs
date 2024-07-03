@@ -12,21 +12,34 @@ public class Tile : MonoBehaviour
     GameObject towerToSpawn;
     public GameObject[] towerPrefabs;
 
-    private void Update()
-    {
-        
-    }
     public void SpawnTower(TowerType towerType)
     {
         Vector3 spawnPoint = this.transform.position + Vector3.up;
         towerToSpawn = Instantiate(towerPrefabs[(int)towerType],spawnPoint, Quaternion.identity);
     }
 
-    public void OnClicked()
+    public void OnNomalSelected()
     {
         if (isSelected)
         {
+            print("노말 선택");
             SpawnTower(TowerType.NOMAL);
+        }
+    }
+
+    public void OnSlowSelected()
+    {
+        if (isSelected)
+        {
+            print("슬로우 선택");
+        }
+    }
+
+    public void OnSniperSelected()
+    {
+        if (isSelected)
+        {
+            print("스나이퍼 선택");
         }
     }
 }
