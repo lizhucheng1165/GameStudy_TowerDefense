@@ -5,12 +5,13 @@ using UnityEngine;
 public class TowerBaseTile : MonoBehaviour
 {
     [SerializeField] GameObject prefabTower;
+    [SerializeField] InGameManager currentGameManager;
     GameObject currentTower;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentGameManager = GameObject.FindObjectOfType<InGameManager>();
     }
 
     // Update is called once per frame
@@ -21,8 +22,14 @@ public class TowerBaseTile : MonoBehaviour
 
     private void OnMouseDown()
     {
+        int tempGold;
         Debug.Log("clicked: " + this.gameObject.name);
-        createTower();
+        tempGold = currentGameManager.getCurrentGold();
+        if (tempGold >= 10)
+        {
+            currentGameManager.minusCurrentGold(10);
+            createTower();
+        }
     }
 
     void createTower()

@@ -45,6 +45,12 @@ public class InGameManager : MonoBehaviour
         return nCurrentGold;
     }
 
+    public void minusCurrentGold(int nMinusGold)
+    {
+        nCurrentGold -= nMinusGold;
+        currentUIManager.updateCurrentGoldStat();
+    }
+
     public void addCurrentGold(int nAddValue)
     {
         nCurrentGold += nAddValue;
@@ -109,7 +115,7 @@ public class InGameManager : MonoBehaviour
 
     void initGameStatus()
     {
-        nCurrentGold = 0;
+        nCurrentGold = 30;
         //nEnemyGeneratingCount = 0;
         nEnemyKilled = 0;
         nLeftEnemy = 0;
