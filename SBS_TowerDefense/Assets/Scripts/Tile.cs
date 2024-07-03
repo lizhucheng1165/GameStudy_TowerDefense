@@ -7,17 +7,14 @@ public class Tile : MonoBehaviour
 {
     public int positionX;
     public int positionY;
-    bool isSelected;
+    public bool isSelected;
     TowerType towerType;
     GameObject towerToSpawn;
     public GameObject[] towerPrefabs;
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    SpawnTower(TowerType.NOMAL);
-        //}
+        
     }
     public void SpawnTower(TowerType towerType)
     {
@@ -27,6 +24,9 @@ public class Tile : MonoBehaviour
 
     public void OnClicked()
     {
-        SpawnTower(TowerType.NOMAL);
+        if (isSelected)
+        {
+            SpawnTower(TowerType.NOMAL);
+        }
     }
 }
