@@ -2,14 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Tile : MonoBehaviour
 {
-    int positionX;
-    int positionY;
+    public int positionX;
+    public int positionY;
     bool isSelected;
     TowerType towerType;
     GameObject towerToSpawn;
-    GameObject[] towerPrefabs;
+    public GameObject[] towerPrefabs;
 
-    void SpawnTower(TowerType towerType) { }
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    SpawnTower(TowerType.NOMAL);
+        //}
+    }
+    public void SpawnTower(TowerType towerType)
+    {
+        Vector3 spawnPoint = this.transform.position + Vector3.up;
+        towerToSpawn = Instantiate(towerPrefabs[(int)towerType],spawnPoint, Quaternion.identity);
+    }
+
+    public void OnClicked()
+    {
+        SpawnTower(TowerType.NOMAL);
+    }
 }
