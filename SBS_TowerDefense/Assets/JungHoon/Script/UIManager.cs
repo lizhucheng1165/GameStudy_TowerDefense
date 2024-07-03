@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text textLifeCapacity;
     [SerializeField] Text textEnemyKilled;
     [SerializeField] Text textCurrentWave;
-    [SerializeField] Text textDifficulty;
+    [SerializeField] Text textLastWave;
 
     // Start is called before the first frame update
     void Start()
@@ -31,8 +31,8 @@ public class UIManager : MonoBehaviour
         textLeftEnemy.text = 0.ToString();
         textLifeCapacity.text = 0.ToString();
         textEnemyKilled.text = 0.ToString();
-        textCurrentWave.text = 0.ToString();
-        textDifficulty.text = 0.ToString();
+        textCurrentWave.text = currentInGameManager.getCurrentWave().ToString();
+        textLastWave.text = currentInGameManager.getLastWave().ToString();
     }
 
     public void updateCurrentGoldStat()
@@ -48,6 +48,16 @@ public class UIManager : MonoBehaviour
     public void updateCurrentLeftEnemy()
     {
         textLeftEnemy.text = currentInGameManager.getCurrentLeftEnemy().ToString();
+    }
+
+    public void updateCurrentWave()
+    {
+        textCurrentWave.text = currentInGameManager.getCurrentWave().ToString();
+    }
+    
+    public void updateLastWave()
+    {
+        textLastWave.text = currentInGameManager.getLastWave().ToString();
     }
 
 }

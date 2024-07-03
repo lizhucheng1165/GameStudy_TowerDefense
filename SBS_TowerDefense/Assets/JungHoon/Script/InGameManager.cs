@@ -18,13 +18,19 @@ public class InGameManager : MonoBehaviour
     int nEnemyKilled;
     int nLeftEnemy;
     int nMaxEnemyCount;
+    int nCurrentWave;
+    int nLastWave;
+
+    public List<Wave> arGameWaveList = new List<Wave>();
 
     // Start is called before the first frame update
     void Start()
     {
         initGameStatus();
+        initGameWaveInfo(nLastWave);
         generateBaseTile(7);
         startWave();
+        
     }
 
     // Update is called once per frame
@@ -68,6 +74,16 @@ public class InGameManager : MonoBehaviour
         currentUIManager.updateCurrentLeftEnemy();
     }
 
+    public int getCurrentWave()
+    {
+        return nCurrentWave;
+    }
+
+    public int getLastWave()
+    {
+        return nLastWave;
+    }
+
     public void minusLeftEnemyCount()
     {
         nLeftEnemy--;
@@ -81,10 +97,33 @@ public class InGameManager : MonoBehaviour
         nEnemyKilled = 0;
         nLeftEnemy = 0;
         nMaxEnemyCount = 5;
+        nCurrentWave = 0;
+        nLastWave = 5;
+    }
+
+    void initGameWaveInfo(int nLastWaveCount)
+    {
+        int nWaveCount = 0;
+        while (nWaveCount < nLastWaveCount)
+        {
+            Wave newWave = new Wave();
+            newWave.nMyWaveNumber = nWaveCount;
+            newWave.nCreateEnemyCount = 3;
+            arGameWaveList.Add(newWave);
+            nWaveCount++;
+            Debug.Log(newWave.nMyWaveNumber + " newWave created and added..");
+        }
     }
 
     void startWave()
     {
+        nCurrentWave++;
+        currentUIManager.updateCurrentWave();
+        
+        int nWaveListIndex;
+
+        nWaveListIndex = nCurrentWave - 1;
+        nMaxEnemyCount = arGameWaveList[nWaveListIndex].nCreateEnemyCount;
         InvokeRepeating("generateEnemy", 0.5f, 1.0f);
     }
 

@@ -602,7 +602,7 @@ MonoBehaviour:
   textLifeCapacity: {fileID: 737213292}
   textEnemyKilled: {fileID: 111247993}
   textCurrentWave: {fileID: 1646065910}
-  textDifficulty: {fileID: 878241186}
+  textLastWave: {fileID: 878241186}
 --- !u!4 &226450633
 Transform:
   m_ObjectHideFlags: 0
@@ -740,7 +740,7 @@ GameObject:
   - component: {fileID: 360514849}
   - component: {fileID: 360514848}
   m_Layer: 5
-  m_Name: title_Difficulty
+  m_Name: title_LastWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -798,7 +798,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Difficulty
+  m_Text: Last Wave
 --- !u!222 &360514849
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1576,7 +1576,7 @@ GameObject:
   - component: {fileID: 878241187}
   - component: {fileID: 878241186}
   m_Layer: 5
-  m_Name: text_Difficulty
+  m_Name: text_LastWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
