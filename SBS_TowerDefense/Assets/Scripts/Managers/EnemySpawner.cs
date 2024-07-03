@@ -77,7 +77,6 @@ public class EnemySpawner : MonoBehaviour
     }
     private void AddWaveIndex()
     {
-        print("웨이브인덱스 증가");
         WaveIndex++;
     }
 

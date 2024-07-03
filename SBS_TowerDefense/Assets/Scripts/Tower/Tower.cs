@@ -12,6 +12,7 @@ public class Tower : MonoBehaviour
     public TowerType towerType { get; set; }
     public int usedMoneyToUpgrade { get; set; }
     public LayerMask mask;
+
     public virtual void InitializeStatus(TowerType type)
     {
 

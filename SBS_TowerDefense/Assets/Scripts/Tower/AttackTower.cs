@@ -5,19 +5,21 @@ using UnityEngine;
 public class AttackTower : Tower , InterFaces.IAttackAble
 {
     public float attackPower { get; set; }
-    public int attackSpeed { get; set; }
+    public float attackSpeed { get; set; }
     public int attackRange { get; set; }
     public GameObject[] enemiesInRage;
     public GameObject currentTargetEnemy;
+    public GameObject projectile;
+    public float elapsedTimeSinceLastFire;
 
-    private void Awake()
-    {
-
-    }
 
     private void Update()
     {
         LookAtCurrentTargetEnemy();
+        if (CalculateFireCooldown() & currentTargetEnemy != null)
+        {
+            ShootProjectile();
+        }
     }
     public GameObject FindClosestEnemy(GameObject[] enemiesInRange)
     {
@@ -60,9 +62,7 @@ public class AttackTower : Tower , InterFaces.IAttackAble
     {
         if (target != null)
         {
-            //Vector3 targetpoint = new Vector3(target.transform.position.x, this.transform.position.y, target.transform.position.z);
-            //transform.LookAt(targetpoint);
-            transform.LookAt(target.transform);
+            transform.LookAt(target.transform.position);
         }
         else
         {
@@ -71,10 +71,6 @@ public class AttackTower : Tower , InterFaces.IAttackAble
         }
     }
 
-    public void ShootProjectile()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public void CheckOutOfRange(GameObject currentTarget)
     {
@@ -100,5 +96,23 @@ public class AttackTower : Tower , InterFaces.IAttackAble
 
         LookAtTarget(currentTargetEnemy);
 
+    }
+
+    public bool CalculateFireCooldown()
+    {
+        elapsedTimeSinceLastFire += Time.deltaTime;
+        if (elapsedTimeSinceLastFire > attackSpeed)
+        {
+            elapsedTimeSinceLastFire = 0;
+            return true;
+        }
+
+        return false;
+    }
+    public void ShootProjectile()
+    {
+        GameObject tempProjectile = Instantiate(projectile, this.transform.position, Quaternion.identity);
+        tempProjectile.TryGetComponent<Projectile>(out Projectile projectileComponent);
+        projectileComponent.SetCurrentTarget(currentTargetEnemy);
     }
 }

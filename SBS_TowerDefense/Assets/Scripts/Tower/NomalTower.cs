@@ -12,5 +12,6 @@ public class NomalTower : AttackTower
         attackSpeed = 1;
         towerType = TowerType.NOMAL;
         UpgradeAble = true;
+        elapsedTimeSinceLastFire = 0;
     }
 }

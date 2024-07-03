@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6742140955910354516}
   - component: {fileID: 3396643180041656606}
   - component: {fileID: 379231135684153055}
-  - component: {fileID: 6866023391509007163}
   - component: {fileID: -5602350549686411544}
+  - component: {fileID: 5011692976105244083}
   m_Layer: 6
   m_Name: TankerEnemy
   m_TagString: Untagged
@@ -86,8 +86,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6866023391509007163
-CapsuleCollider:
+--- !u!114 &-5602350549686411544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088174103093997922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04e54b1c908f3b49ab5f25b0ea1b3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &5011692976105244083
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -101,26 +113,12 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 3
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-5602350549686411544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3088174103093997922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e54b1c908f3b49ab5f25b0ea1b3de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6026651225117581719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -151,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 845f9df773be94e26aa80e92ad483534, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.572
+      value: 0.046
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 845f9df773be94e26aa80e92ad483534, type: 3}
       propertyPath: m_LocalPosition.z

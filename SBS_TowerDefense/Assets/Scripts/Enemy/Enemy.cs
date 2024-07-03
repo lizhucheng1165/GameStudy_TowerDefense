@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
     public void MoveToPoint(GameObject movePoint)
     {
         Vector3 MovingPosition = Vector3.MoveTowards(this.transform.position, movePoint.transform.position, 0.005f * moveSpeed);
-        LookAtTargetPoint(MovingPosition);
+        LookAtMovingPoint(MovingPosition);
         this.transform.position = MovingPosition;
     }
 
@@ -73,6 +73,11 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
             wayPointIndexSrc++;
         }
     }
+
+    public void LookAtMovingPoint(Vector3 targetPoint)
+    {
+        transform.LookAt(targetPoint);
+    }
     public void MoveArround()
     {
         currentTargetWayPoint = SetMovePoint(wayPoints);
@@ -80,9 +85,31 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
         AddWayPointIndex();
     }
 
-    public void LookAtTargetPoint(Vector3 targetPoint)
+    public void TakeDamage(int damage)
     {
-        transform.LookAt(targetPoint);
+        currentHealth -= damage;
+        bool isDie = CheckHealth();
+        if (isDie)
+        {
+            Die();
+        }
+    }
+
+    public bool CheckHealth()
+    {
+        if (currentHealth < 0)
+        {
+            
+            return true;
+        }
+
+        return false;
+    }
+
+    public void Die()
+    {
+        GiveMoney(lootGold);
+        Destroy(this.gameObject);
     }
 }
 

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6742140955910354516}
   - component: {fileID: 3396643180041656606}
   - component: {fileID: 379231135684153055}
-  - component: {fileID: 6866023391509007163}
   - component: {fileID: 5273341448840525628}
+  - component: {fileID: 8288818358493532286}
   m_Layer: 6
   m_Name: BossEnemy
   m_TagString: Untagged
@@ -86,8 +86,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6866023391509007163
-CapsuleCollider:
+--- !u!114 &5273341448840525628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088174103093997922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8cbad428488a6c4fb8b97af71de0bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &8288818358493532286
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -101,26 +113,12 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 3
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5273341448840525628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3088174103093997922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8cbad428488a6c4fb8b97af71de0bf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4419284512767217660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186,6 +184,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: b88344621c1aa461f9f426b4146b3cd2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b88344621c1aa461f9f426b4146b3cd2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b88344621c1aa461f9f426b4146b3cd2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b88344621c1aa461f9f426b4146b3cd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0096
       objectReference: {fileID: 0}
@@ -196,7 +206,7 @@ PrefabInstance:
     - target: {fileID: 2300000, guid: b88344621c1aa461f9f426b4146b3cd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 38edcf9973f284b92a2cd360c60cae6e, type: 2}
+      objectReference: {fileID: 2100000, guid: 48efc3760d51645329779dabd538be0c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

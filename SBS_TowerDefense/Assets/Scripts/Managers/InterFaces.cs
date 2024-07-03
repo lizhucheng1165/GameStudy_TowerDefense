@@ -27,7 +27,7 @@ public class InterFaces : MonoBehaviour
     public interface IAttackAble
     {
         float attackPower { get; set; }
-        int attackSpeed { get; set; }
+        float attackSpeed { get; set; }
         int attackRange { get; set; }
 
         GameObject FindClosestEnemy(GameObject[] enemiesInRange);
