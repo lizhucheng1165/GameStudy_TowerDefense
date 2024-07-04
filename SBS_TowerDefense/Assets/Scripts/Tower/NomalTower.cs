@@ -6,7 +6,7 @@ public class NomalTower : AttackTower
 {
     private void Awake()
     {
-        attackPower = 2.0f;
+        attackPower = 2;
         price = 5;
         attackRange = 3;
         attackSpeed = 1;

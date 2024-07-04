@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TowerType { NOMAL, CHAIN, SNIPER, POWERBUFF, SLOW}
+public enum TowerType { NOMAL, SNIPER, CHAIN, POWERBUFF, SLOW}
 
 public class Tower : MonoBehaviour
 {
@@ -25,5 +25,5 @@ public class Tower : MonoBehaviour
     {
 
     }
-
+    
 }

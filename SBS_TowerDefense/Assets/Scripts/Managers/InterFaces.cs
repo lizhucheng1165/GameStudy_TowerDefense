@@ -26,7 +26,7 @@ public class InterFaces : MonoBehaviour
 
     public interface IAttackAble
     {
-        float attackPower { get; set; }
+        int attackPower { get; set; }
         float attackSpeed { get; set; }
         int attackRange { get; set; }
 

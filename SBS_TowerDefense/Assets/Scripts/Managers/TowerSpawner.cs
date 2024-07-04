@@ -10,12 +10,15 @@ public class TowerSpawner : MonoBehaviour
     public TowerType towerType;
     private void Awake()
     {
-        button = GetComponent<Button>();
-        foreach (Tile tile in tiles)
+        if (TryGetComponent<Button>(out button))
         {
-            AddEvents(tile);
+            foreach (Tile tile in tiles)
+            {
+                AddEvents(tile);
+            }
         }
 
+        button.onClick.AddListener(ResetTileSelection);
     }
 
     public void AddEvents(Tile tile)
@@ -25,12 +28,21 @@ public class TowerSpawner : MonoBehaviour
             case TowerType.NOMAL:
                 button.onClick.AddListener(tile.OnNomalSelected);
                 break;
-            case TowerType.SLOW:
-                button.onClick.AddListener(tile.OnSlowSelected);
-                break;
             case TowerType.SNIPER:
                 button.onClick.AddListener(tile.OnSniperSelected);
                 break;
+            case TowerType.SLOW:
+                button.onClick.AddListener(tile.OnSlowSelected);
+                break;
+        }
+    }
+
+    public void ResetTileSelection()
+    {
+        GameManager.Instance.currentGameState = GameState.PLAYING;
+        foreach (Tile tile in tiles)
+        {
+            tile.isSelected = false;
         }
     }
 }

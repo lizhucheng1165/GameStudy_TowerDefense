@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     public float projectileSpeed { get; set; }
     public int projectileDamage { get; set; }
     public GameObject currentTarget { get; set; }
+    public int towerDamage;
 
     private void Start()
     {
@@ -45,13 +46,16 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
-            //추후 데미지주기로 변경
             if (other.TryGetComponent<Enemy>(out Enemy enemy))
             {
-                enemy.TakeDamage(projectileDamage);
+                enemy.TakeDamage(projectileDamage, towerDamage);
             }
 
             Destroy(this.gameObject);
         }
+    }
+    public void SetTowerDamage(int towerDamage)
+    {
+        this.towerDamage = towerDamage;
     }
 }

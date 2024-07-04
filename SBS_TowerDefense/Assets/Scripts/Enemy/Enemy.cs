@@ -85,9 +85,9 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
         AddWayPointIndex();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int projectileDamage, int towerDamage)
     {
-        currentHealth -= damage;
+        currentHealth -= projectileDamage + towerDamage;
         bool isDie = CheckHealth();
         if (isDie)
         {

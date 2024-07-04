@@ -4,5 +4,14 @@ using UnityEngine;
 
 public class SniperTower : AttackTower
 {
-    
+    private void Awake()
+    {
+        attackPower = 10;
+        price = 50;
+        attackRange = 5;
+        attackSpeed = 2;
+        towerType = TowerType.SNIPER;
+        UpgradeAble = true;
+        elapsedTimeSinceLastFire = 0;
+    }
 }

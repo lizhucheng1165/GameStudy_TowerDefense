@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackTower : Tower , InterFaces.IAttackAble
 {
-    public float attackPower { get; set; }
+    public int attackPower { get; set; }
     public float attackSpeed { get; set; }
     public int attackRange { get; set; }
     public GameObject[] enemiesInRage;
@@ -114,5 +114,8 @@ public class AttackTower : Tower , InterFaces.IAttackAble
         GameObject tempProjectile = Instantiate(projectile, this.transform.position, Quaternion.identity);
         tempProjectile.TryGetComponent<Projectile>(out Projectile projectileComponent);
         projectileComponent.SetCurrentTarget(currentTargetEnemy);
+        projectileComponent.SetTowerDamage(attackPower);
     }
+
+    
 }

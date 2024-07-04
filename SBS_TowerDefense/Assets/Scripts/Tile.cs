@@ -1,45 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Tile : MonoBehaviour
 {
     public int positionX;
     public int positionY;
-    public bool isSelected;
     TowerType towerType;
     GameObject towerToSpawn;
     public GameObject[] towerPrefabs;
 
+    Button button;
+    public bool isSelected;
+    public bool towerSpawned = false;
+    private void Awake()
+    {
+        SetOnclick();
+    }
+
     public void SpawnTower(TowerType towerType)
     {
-        Vector3 spawnPoint = this.transform.position + Vector3.up;
+        Vector3 spawnPoint = this.transform.position + Vector3.up * 0.7f;
         towerToSpawn = Instantiate(towerPrefabs[(int)towerType],spawnPoint, Quaternion.identity);
     }
 
     public void OnNomalSelected()
     {
-        if (isSelected)
+        if (isSelected && !towerSpawned)
         {
-            print("노말 선택");
             SpawnTower(TowerType.NOMAL);
+            isSelected = false;
+            towerSpawned = true;
         }
     }
 
     public void OnSlowSelected()
     {
-        if (isSelected)
+        if (isSelected && !towerSpawned)
         {
-            print("슬로우 선택");
+            isSelected = false;
+            towerSpawned = true;
         }
     }
 
     public void OnSniperSelected()
     {
-        if (isSelected)
+        if (isSelected && !towerSpawned)
         {
-            print("스나이퍼 선택");
+            SpawnTower(TowerType.SNIPER);
+            isSelected = false;
+            towerSpawned = true;
         }
     }
+
+    public void OnTileSelected()
+    {
+        if (!GameManager.Instance.CheckIfTileSelected())
+        {
+            isSelected = true;
+        }
+        GameManager.Instance.currentGameState = GameState.TILE_SELECTED;
+    }
+
+    public void SetOnclick()
+    {
+        isSelected = false;
+        if (TryGetComponent<Button>(out button))
+        {
+            button.onClick.AddListener(OnTileSelected);
+        }
+    }
+
 }
