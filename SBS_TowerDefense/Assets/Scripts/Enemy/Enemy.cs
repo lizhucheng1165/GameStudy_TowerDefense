@@ -110,6 +110,7 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
     {
         GiveMoney(lootGold);
         Destroy(this.gameObject);
+        GameManager.Instance.EnemyCount--;
     }
 }
 

@@ -19,6 +19,10 @@ public class EnemySpawner : MonoBehaviour
             {
                 waveIndex = value;
             }
+            else
+            {
+                print("waveIndex가 너무 큽니다");
+            }
         }
     }
     public float waveElapsedTime;
@@ -49,6 +53,7 @@ public class EnemySpawner : MonoBehaviour
     {
         Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
         GameManager.Instance.spawnCount++;
+        GameManager.Instance.EnemyCount++;
     }
     private void StopSpawning()
     {

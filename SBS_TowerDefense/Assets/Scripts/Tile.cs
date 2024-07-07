@@ -23,7 +23,28 @@ public class Tile : MonoBehaviour
     public void SpawnTower(TowerType towerType)
     {
         Vector3 spawnPoint = this.transform.position + Vector3.up * 0.7f;
-        towerToSpawn = Instantiate(towerPrefabs[(int)towerType],spawnPoint, Quaternion.identity);
+        print(towerPrefabs[(int)towerType].GetComponent<Tower>().price);
+        if (CheckTowerPurchase(towerPrefabs[(int)towerType]))
+        {
+            towerToSpawn = Instantiate(towerPrefabs[(int)towerType], spawnPoint, Quaternion.identity);
+        }
+
+    }
+
+    public bool CheckTowerPurchase(GameObject towerToPurChase)
+    {
+        towerToPurChase.TryGetComponent<Tower>(out Tower test);
+        if (towerToPurChase.TryGetComponent<Tower>(out Tower tower))
+        {
+            print("타워가없나?");
+            if (tower.price <= GameManager.Instance.Money)
+            {
+                GameManager.Instance.Money -= tower.price;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void OnNomalSelected()
