@@ -11,6 +11,8 @@ public class Tile : MonoBehaviour
     TowerType towerType;
     GameObject towerToSpawn;
     public GameObject[] towerPrefabs;
+    Dictionary<TowerType, int> towerPrices;
+    int selectedTowerPrice;
 
     Button button;
     public bool isSelected;
@@ -18,30 +20,35 @@ public class Tile : MonoBehaviour
     private void Awake()
     {
         SetOnclick();
+        SetTowerPriceDictionary();
+    }
+
+    private void SetTowerPriceDictionary()
+    {
+        towerPrices = new Dictionary<TowerType, int>
+        {
+            {TowerType.NOMAL, 5 },
+            {TowerType.SNIPER, 50 }
+        };
     }
 
     public void SpawnTower(TowerType towerType)
     {
         Vector3 spawnPoint = this.transform.position + Vector3.up * 0.7f;
-        print(towerPrefabs[(int)towerType].GetComponent<Tower>().price);
-        if (CheckTowerPurchase(towerPrefabs[(int)towerType]))
+        towerPrices.TryGetValue(towerType, out selectedTowerPrice);
+        if (CheckTowerPurchase(selectedTowerPrice))
         {
             towerToSpawn = Instantiate(towerPrefabs[(int)towerType], spawnPoint, Quaternion.identity);
         }
-
     }
 
-    public bool CheckTowerPurchase(GameObject towerToPurChase)
+    public bool CheckTowerPurchase(int price)
     {
-        towerToPurChase.TryGetComponent<Tower>(out Tower test);
-        if (towerToPurChase.TryGetComponent<Tower>(out Tower tower))
+
+        if (price <= GameManager.Instance.Money)
         {
-            print("타워가없나?");
-            if (tower.price <= GameManager.Instance.Money)
-            {
-                GameManager.Instance.Money -= tower.price;
-                return true;
-            }
+            GameManager.Instance.Money -= price;
+            return true;
         }
 
         return false;
