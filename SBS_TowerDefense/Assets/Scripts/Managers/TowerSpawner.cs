@@ -9,6 +9,8 @@ public class TowerSpawner : MonoBehaviour
     Button button;
     public Tile[] tiles;
     public TowerType towerType;
+    //public GameObject towerInfoUI;
+    //RectTransform towerInfoUIRectTransform;
     private void Awake()
     {
         if (TryGetComponent<Button>(out button))
@@ -20,6 +22,7 @@ public class TowerSpawner : MonoBehaviour
         }
         
         button.onClick.AddListener(ResetTileSelection);
+        //towerInfoUIRectTransform = towerInfoUI.GetComponent<RectTransform>();
     }
     private void Update()
     {
@@ -32,7 +35,10 @@ public class TowerSpawner : MonoBehaviour
     }
     private void OnMouseOver()
     {
-        //마우스위치에 UI를 띄운다
+        //print("마우스오버");
+        ////마우스위치에 UI를 띄운다
+        //RectTransformUtility.ScreenPointToLocalPointInRectangle(towerInfoUIRectTransform, Input.mousePosition, null, out Vector2 localPoint);
+        //towerInfoUIRectTransform.anchoredPosition = localPoint;
     }
     
     public void AddEvents(Tile tile)
