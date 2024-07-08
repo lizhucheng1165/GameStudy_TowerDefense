@@ -32,7 +32,7 @@ public class TowerSpawner : MonoBehaviour
     }
     private void OnMouseOver()
     {
-        print(towerType);
+        //마우스위치에 UI를 띄운다
     }
     
     public void AddEvents(Tile tile)

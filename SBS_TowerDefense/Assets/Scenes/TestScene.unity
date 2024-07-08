@@ -2616,6 +2616,7 @@ GameObject:
   - component: {fileID: 1112069408}
   - component: {fileID: 1112069407}
   - component: {fileID: 1112069410}
+  - component: {fileID: 1112069411}
   m_Layer: 5
   m_Name: SlowTowerButton
   m_TagString: Untagged
@@ -2775,6 +2776,21 @@ MonoBehaviour:
   - {fileID: 1451182286}
   - {fileID: 1156807045}
   towerType: 0
+  towerDatas:
+  - {fileID: 11400000, guid: 1579d8663f26e9349a278c53264b357f, type: 2}
+  - {fileID: 11400000, guid: a0a5278eca5dfad48b7f33c739a9a5d5, type: 2}
+--- !u!114 &1112069411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112069405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1292514739752ce43a92a72b86308165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1112452912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3191,6 +3207,7 @@ GameObject:
   - component: {fileID: 1163413877}
   - component: {fileID: 1163413876}
   - component: {fileID: 1163413879}
+  - component: {fileID: 1163413880}
   m_Layer: 5
   m_Name: SniperTowerButton
   m_TagString: Untagged
@@ -3350,6 +3367,21 @@ MonoBehaviour:
   - {fileID: 1451182286}
   - {fileID: 1156807045}
   towerType: 1
+  towerDatas:
+  - {fileID: 11400000, guid: 1579d8663f26e9349a278c53264b357f, type: 2}
+  - {fileID: 11400000, guid: a0a5278eca5dfad48b7f33c739a9a5d5, type: 2}
+--- !u!114 &1163413880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163413874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1292514739752ce43a92a72b86308165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1165714131
 GameObject:
   m_ObjectHideFlags: 0
@@ -3523,27 +3555,21 @@ MonoBehaviour:
   - {fileID: 1451182286}
   - {fileID: 1156807045}
   towerType: 0
---- !u!65 &1165714139
-BoxCollider:
+  towerDatas:
+  - {fileID: 11400000, guid: 1579d8663f26e9349a278c53264b357f, type: 2}
+  - {fileID: 11400000, guid: a0a5278eca5dfad48b7f33c739a9a5d5, type: 2}
+--- !u!114 &1165714139
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165714131}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 160, y: 30, z: 10}
-  m_Center: {x: -80, y: 15, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1292514739752ce43a92a72b86308165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1196903720
 GameObject:
   m_ObjectHideFlags: 0
