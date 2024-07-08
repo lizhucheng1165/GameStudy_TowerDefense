@@ -45,6 +45,7 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         StartCoroutine(InitalizeGameStatus());
+
     }
     IEnumerator InitalizeGameStatus()
     {
@@ -53,12 +54,10 @@ public class GameManager : Singleton<GameManager>
         if (mode == DebugMode.DEBUGGING)
         {
             Money = 99999;
-            waveInterval = 8.0f;
         }
         else
         {
             Money = 0;
-            waveInterval = 60f;
         }
         enemyCount = 0;
         enemyTotalHealth = 0;

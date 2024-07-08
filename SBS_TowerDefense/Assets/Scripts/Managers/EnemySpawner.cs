@@ -31,9 +31,20 @@ public class EnemySpawner : MonoBehaviour
     {
         WaveIndex = 0;
         GameManager.Instance.spawnInterval = 1.0f;
+        if (GameManager.Instance.mode == DebugMode.DEBUGGING)
+        {
+            GameManager.Instance.waveInterval = 5.0f;
+        }
+        else
+        {
+            GameManager.Instance.waveInterval = 60f;
+        }
         spawnPoint = this.transform.position;
         waveElapsedTime = 0;
         maintenanceTime = 5.0f;
+    }
+    private void Start()
+    {
         StartSpawnCurrentWave();
     }
 
