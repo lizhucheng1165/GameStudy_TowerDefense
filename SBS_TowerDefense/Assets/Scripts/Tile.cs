@@ -40,6 +40,7 @@ public class Tile : MonoBehaviour
         {
             towerToSpawn = Instantiate(towerPrefabs[(int)towerType], spawnPoint, Quaternion.identity);
         }
+        UIManager.Instance.SetUpTowerSpawnCancleUI();
     }
 
     public bool CheckTowerPurchase(int price)
@@ -90,6 +91,7 @@ public class Tile : MonoBehaviour
             isSelected = true;
         }
         GameManager.Instance.currentGameState = GameState.TILE_SELECTED;
+        UIManager.Instance.SetUpTowerSpawnCancleUI();
     }
 
     public void SetOnclick()

@@ -20,7 +20,14 @@ public class TowerSpawner : MonoBehaviour
 
         button.onClick.AddListener(ResetTileSelection);
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.currentGameState == GameState.TILE_SELECTED)
+        {
+            ResetTileSelection();
+            UIManager.Instance.SetUpTowerSpawnCancleUI();
+        }
+    }
     public void AddEvents(Tile tile)
     {
         switch (towerType)

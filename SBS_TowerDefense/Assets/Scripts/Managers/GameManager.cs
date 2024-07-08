@@ -44,6 +44,11 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        StartCoroutine(InitalizeGameStatus());
+    }
+    IEnumerator InitalizeGameStatus()
+    {
+        yield return new WaitForEndOfFrame();
         waveCount = 0;
         if (mode == DebugMode.DEBUGGING)
         {
@@ -59,7 +64,7 @@ public class GameManager : Singleton<GameManager>
         enemyTotalHealth = 0;
         //추후 변경
         currentGameState = GameState.PLAYING;
-
+        UIManager.Instance.SetUpTowerSpawnCancleUI();
     }
 
     private void Update()
