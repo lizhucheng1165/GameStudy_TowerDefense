@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class TowerSpawner : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class TowerSpawner : MonoBehaviour
                 AddEvents(tile);
             }
         }
-
+        
         button.onClick.AddListener(ResetTileSelection);
     }
     private void Update()
@@ -27,7 +28,13 @@ public class TowerSpawner : MonoBehaviour
             ResetTileSelection();
             UIManager.Instance.SetUpTowerSpawnCancleUI();
         }
+         
     }
+    private void OnMouseOver()
+    {
+        print(towerType);
+    }
+    
     public void AddEvents(Tile tile)
     {
         switch (towerType)
@@ -52,4 +59,5 @@ public class TowerSpawner : MonoBehaviour
             tile.isSelected = false;
         }
     }
+
 }

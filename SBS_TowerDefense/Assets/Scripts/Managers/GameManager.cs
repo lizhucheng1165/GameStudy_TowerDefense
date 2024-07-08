@@ -57,7 +57,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            Money = 0;
+            Money = 50;
         }
         enemyCount = 0;
         enemyTotalHealth = 0;

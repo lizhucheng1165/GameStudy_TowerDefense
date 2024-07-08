@@ -8,7 +8,7 @@ public class Tower : MonoBehaviour
 {
     public int price { get; set; }
     public int level { get; set; }
-    public bool UpgradeAble { get; set; }
+    public bool upgradeAble { get; set; }
     public TowerType towerType { get; set; }
     public int usedMoneyToUpgrade { get; set; }
     public LayerMask mask;

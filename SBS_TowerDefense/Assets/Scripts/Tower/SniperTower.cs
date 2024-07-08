@@ -11,7 +11,7 @@ public class SniperTower : AttackTower
         attackRange = 5;
         attackSpeed = 2;
         towerType = TowerType.SNIPER;
-        UpgradeAble = true;
+        upgradeAble = true;
         elapsedTimeSinceLastFire = 0;
     }
 }

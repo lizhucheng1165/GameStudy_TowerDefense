@@ -42,6 +42,7 @@ public class Tile : MonoBehaviour
         }
         UIManager.Instance.SetUpTowerSpawnCancleUI();
     }
+    
 
     public bool CheckTowerPurchase(int price)
     {

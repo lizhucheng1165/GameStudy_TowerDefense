@@ -46,6 +46,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         StartSpawnCurrentWave();
+     
     }
 
     void Update()

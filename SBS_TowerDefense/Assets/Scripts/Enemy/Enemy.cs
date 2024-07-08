@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
 
     public void GiveMoney(int lootGold)
     {
-
+        GameManager.Instance.Money += lootGold;
     }
 
     public void InitializeStatus(int waveCount)
