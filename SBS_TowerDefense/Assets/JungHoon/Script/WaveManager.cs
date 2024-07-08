@@ -12,27 +12,31 @@ public class WaveManager : MonoBehaviour
     int nCurrentWave;
     int nCurrentWaveMaxEnemyCount;
     int nLastWave;
-    float fWaveStartDelayTime;
-    float fTime;
+    float fWaveStartTime;
+    float fWaveDelayTime;
+    float fWaveStartCountDown;
+    int nWaveStartCountDown;
     bool bWaveActive;
     int nTotalEnemyCount;
+    bool bNextWaveAlert;
 
     // Start is called before the first frame update
     void Start()
     {
-        nCurrentWave = 0;
-        nEnemyGeneratingCount = 0;
-        nCurrentWaveMaxEnemyCount = 0;
-        nLastWave = 3;
-        fWaveStartDelayTime = 0f;
-        fTime = 0f;
-        bWaveActive = true;
-        nTotalEnemyCount = 0;
 
-        initGameWaveInfo(nLastWave);
+        initWaveManager(3);
 
-        fWaveStartDelayTime = arGameWaveList[nCurrentWave].fWaveStartDelaySecond;
+        if(initGameWaveInfo(nLastWave, 10.0f))
+        {
+            Debug.Log("initGameWaveInfo success..");
+        }
+        else
+        {
+            Debug.Log("initGameWaveInfo failed..");
+        }
 
+        //fWaveStartDelayTime = arGameWaveList[nCurrentWave].fWaveStartDelaySecond;
+        fWaveStartTime = calculateNextWaveDelaySecond();
         //startWave();
     }
 
@@ -41,16 +45,39 @@ public class WaveManager : MonoBehaviour
     {
         if(bWaveActive == true)
         {
-            fTime += Time.deltaTime;
+            fWaveDelayTime += Time.deltaTime;
+            fWaveStartCountDown = fWaveStartTime - fWaveDelayTime;
+            nWaveStartCountDown = (int)fWaveStartCountDown;
+            nWaveStartCountDown++;
+            currentUIManager.textDelayTimeToNextWave.text = nWaveStartCountDown.ToString();
         }
-        
-        if(fTime >= fWaveStartDelayTime)
+
+        if(nWaveStartCountDown <= 3 && bNextWaveAlert == false)
+        {
+            bNextWaveAlert = true;
+            currentUIManager.panelDelayTimeToNextWave.SetActive(true);
+        }
+
+        if (fWaveDelayTime >= fWaveStartTime)
         {
             startWave();
-            fWaveStartDelayTime = calculateNextWaveDelaySecond();
-            fTime = 0f;
+            fWaveStartTime = calculateNextWaveDelaySecond();
+            fWaveDelayTime = 0f;
         }
         //Debug.Log(fTime.ToString());
+    }
+
+    void initWaveManager(int nMaxWave)
+    {
+        nCurrentWave = 0;
+        nEnemyGeneratingCount = 0;
+        nCurrentWaveMaxEnemyCount = 0;
+        nLastWave = nMaxWave;
+        fWaveStartTime = 0f;
+        fWaveDelayTime = 0f;
+        bWaveActive = true;
+        nTotalEnemyCount = 0;
+        bNextWaveAlert = false;
     }
 
     float calculateNextWaveDelaySecond()
@@ -58,9 +85,12 @@ public class WaveManager : MonoBehaviour
         if(nCurrentWave >= nLastWave)
         {
             bWaveActive = false;
+            currentUIManager.panelDelayTimeToNextWave.SetActive(false);
             return 99;
         }
 
+        bNextWaveAlert = false;
+        currentUIManager.panelDelayTimeToNextWave.SetActive(false);
         return arGameWaveList[nCurrentWave].fWaveStartDelaySecond;
     }
 
@@ -106,22 +136,30 @@ public class WaveManager : MonoBehaviour
 
     }
 
-    public void initGameWaveInfo(int nLastWaveCount)
+    public bool initGameWaveInfo(int nLastWaveCount, float fStartDelayTime)
     {
         int nWaveCount = 0;
-        float fBufferTime = 5.0f;
+        //float fBufferTime = 5.0f;
         while (nWaveCount < nLastWaveCount)
         {
             Wave newWave = new Wave();
             newWave.nMyWaveNumber = nWaveCount;
             newWave.nCreateEnemyCount = 2;
             nTotalEnemyCount += newWave.nCreateEnemyCount;
-            newWave.fWaveStartDelaySecond = fBufferTime;
+            //newWave.fWaveStartDelaySecond = fBufferTime;
+            newWave.fWaveStartDelaySecond = fStartDelayTime;
             arGameWaveList.Add(newWave);
             nWaveCount++;
         }
         //Debug.Log("totalEnemyCount: " + nTotalEnemyCount);
         currentGameManager.setMaxEnemyCount(nTotalEnemyCount);
+
+        if(fStartDelayTime <= 3)
+        {
+            return false;
+        }
+
+        return true;
     }
 
 }

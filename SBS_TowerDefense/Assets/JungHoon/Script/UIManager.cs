@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text textEnemyKilled;
     [SerializeField] Text textCurrentWave;
     [SerializeField] Text textLastWave;
+    public Text textDelayTimeToNextWave;
+    public GameObject panelDelayTimeToNextWave;
 
     // Start is called before the first frame update
     void Start()
