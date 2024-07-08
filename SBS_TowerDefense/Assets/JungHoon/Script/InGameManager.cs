@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviour
@@ -22,6 +23,10 @@ public class InGameManager : MonoBehaviour
     int nCurrentWave;
     int nLastWave;
 
+    public int nCurrentSelectedBuildTowerNumber;
+
+    //public List<Button> arBuildTowerBtn;
+
     //public List<Wave> arGameWaveList = new List<Wave>();
 
     // Start is called before the first frame update
@@ -38,6 +43,11 @@ public class InGameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void setCurrentBulidTowerNumber(int nTowerNumber)
+    {
+        nCurrentSelectedBuildTowerNumber = nTowerNumber;
     }
 
     public int getCurrentGold()
@@ -122,6 +132,7 @@ public class InGameManager : MonoBehaviour
         nMaxEnemyCount = 0;
         nCurrentWave = 0;
         nLastWave = 5;
+        nCurrentSelectedBuildTowerNumber = 0;
     }
 
     //void initGameWaveInfo(int nLastWaveCount)

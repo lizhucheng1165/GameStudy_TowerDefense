@@ -628,6 +628,7 @@ MonoBehaviour:
   currentUIManager: {fileID: 226450632}
   currentWaveManager: {fileID: 1062343086}
   arrBoardTile: []
+  nCurrentSelectedBuildTowerNumber: 0
 --- !u!4 &193662454
 Transform:
   m_ObjectHideFlags: 0
@@ -798,7 +799,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Tower01
 --- !u!222 &314280713
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -935,7 +936,7 @@ GameObject:
   - component: {fileID: 388039350}
   - component: {fileID: 388039349}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button_Tower_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1004,7 +1005,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 388039350}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 193662453}
+        m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+        m_MethodName: setCurrentBulidTowerNumber
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &388039350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1195,8 +1208,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 388039348}
-  - {fileID: 809544892}
   - {fileID: 1622979687}
+  - {fileID: 809544892}
   - {fileID: 2010150095}
   - {fileID: 1926140707}
   m_Father: {fileID: 497584085}
@@ -1442,7 +1455,7 @@ GameObject:
   - component: {fileID: 809544894}
   - component: {fileID: 809544893}
   m_Layer: 5
-  m_Name: Button (Legacy) (2)
+  m_Name: Button_Tower_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1511,7 +1524,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 809544894}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 193662453}
+        m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+        m_MethodName: setCurrentBulidTowerNumber
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &809544894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2025,7 +2050,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Tower03
 --- !u!222 &1145231100
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2304,7 +2329,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Tower02
 --- !u!222 &1524568272
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2405,7 +2430,7 @@ GameObject:
   - component: {fileID: 1622979689}
   - component: {fileID: 1622979688}
   m_Layer: 5
-  m_Name: Button (Legacy) (1)
+  m_Name: Button_Tower_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2474,7 +2499,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1622979689}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 193662453}
+        m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+        m_MethodName: setCurrentBulidTowerNumber
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1622979689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3008,7 +3045,7 @@ GameObject:
   - component: {fileID: 2010150097}
   - component: {fileID: 2010150096}
   m_Layer: 5
-  m_Name: Button (Legacy) (3)
+  m_Name: Button_Tower_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3077,7 +3114,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2010150097}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 193662453}
+        m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+        m_MethodName: setCurrentBulidTowerNumber
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2010150097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3357,7 +3406,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Tower04
 --- !u!222 &2122011711
 CanvasRenderer:
   m_ObjectHideFlags: 0
