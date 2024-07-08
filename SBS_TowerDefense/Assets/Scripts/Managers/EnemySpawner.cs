@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     private GameObject enemyPrefab;
     public WaveData[] waveData;
     private int waveIndex;
+    private float maintenanceTime;
     public int WaveIndex
     {
         get { return waveIndex; }
@@ -32,6 +33,7 @@ public class EnemySpawner : MonoBehaviour
         GameManager.Instance.spawnInterval = 1.0f;
         spawnPoint = this.transform.position;
         waveElapsedTime = 0;
+        maintenanceTime = 5.0f;
         StartSpawnCurrentWave();
     }
 
@@ -64,7 +66,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void StartSpawnCurrentWave()
     {
-        InvokeRepeating("SpawnEnemy", 0.3f, GameManager.Instance.spawnInterval);
+        InvokeRepeating("SpawnEnemy", maintenanceTime, GameManager.Instance.spawnInterval);
     }
 
     private bool UpdateElapsedTime()
@@ -94,6 +96,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (waveData[WaveIndex].WaveEnemyType == EnemyType.MIXED)
         {
+            //추후 Enemy추가시 수정
             return Random.Range(0, 3);
         }
 
