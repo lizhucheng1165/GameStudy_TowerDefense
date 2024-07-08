@@ -6,4 +6,6 @@ using UnityEngine;
 public class WaveConfig : ScriptableObject
 {
     [SerializeField] private List<Wave> m_waves;
+
+    public List<Wave> waves {  get { return m_waves; } }
 }

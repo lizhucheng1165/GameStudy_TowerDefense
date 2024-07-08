@@ -23,9 +23,9 @@ public class GameInstance : Singleton<GameInstance>
     [SerializeField] private GameObject m_tilePrefab;
     public GameObject tilePrefab { get { return m_tilePrefab; } }
 
+    private int m_currentWave;
     private int m_difficulty;
     private float m_time;
-    private int m_currentWave;
     private int m_bestWave;
 
     /*==================================================================================================*/
@@ -33,7 +33,10 @@ public class GameInstance : Singleton<GameInstance>
     public GameObject lobbyUIManager { get { return m_lobbyUIManager;} set { m_lobbyUIManager = value; } }
     public GameObject gameUIManager { get { return m_gameUIManager; } set { m_gameUIManager = value; } }
     public int difficulty { get { return m_difficulty; } set { m_difficulty = value; } }
+    public int bestWave { get { return m_bestWave; } set { m_bestWave = value; } }
+    public int currentWave { get { return m_currentWave; } set { m_currentWave = value; } }
     public MonsterConfig monsterConfig { get { return m_monsterConfig; } set { m_monsterConfig = value; } }
+    public WaveConfig waveConfig { get { return m_waveConfig; } set { m_waveConfig = value; } }
     
     private void Start()
     {
@@ -53,6 +56,8 @@ public class GameInstance : Singleton<GameInstance>
 
             m_gameManager = new GameObject("GameManager");
             m_gameManager.AddComponent<GameManager>();
+
+            EventBus.Publish(EventBusType.GAMESTART);
         }
         else if (newScene.name == "Clear")
         {
