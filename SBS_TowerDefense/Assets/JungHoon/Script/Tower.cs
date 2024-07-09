@@ -16,6 +16,7 @@ public class Tower : MonoBehaviour
     void Start()
     {
         myProjectile = Instantiate(prefabProjectile);
+        myProjectile.GetComponent<Projectile>().setProjectileType(ProjectileType.ExplosiveBullet);
         myProjectile.GetComponent<Projectile>().initMyDamage(1.0f);
         myProjectile.GetComponent<Projectile>().myParentGameObject = this.gameObject;
         myProjectile.gameObject.transform.SetParent(this.gameObject.transform);

@@ -26,7 +26,7 @@ public class WaveManager : MonoBehaviour
 
         initWaveManager(3);
 
-        if(initGameWaveInfo(nLastWave, 10.0f))
+        if(initGameWaveInfo(nLastWave, 5.0f))
         {
             Debug.Log("initGameWaveInfo success..");
         }
@@ -115,7 +115,7 @@ public class WaveManager : MonoBehaviour
         nCurrentWaveMaxEnemyCount = arGameWaveList[nWaveListIndex].nCreateEnemyCount;
         //currentGameManager.setMaxEnemyCount(nCurrentWaveMaxEnemyCount);
 
-        InvokeRepeating("generateEnemy", 0.5f, 1.0f);
+        InvokeRepeating("generateEnemy", 0.5f, 0.25f);
     }
 
     void generateEnemy()

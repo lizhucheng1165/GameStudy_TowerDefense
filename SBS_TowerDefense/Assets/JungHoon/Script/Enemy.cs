@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     Vector3 vec3EnemyStartLocation;
     [SerializeField] List<GameObject> targetLocationList;
     int nTargetLocationIndex;
-    float fCurrentHealth;
+    [SerializeField] float fCurrentHealth;
 
     // Start is called before the first frame update
     void Start()
