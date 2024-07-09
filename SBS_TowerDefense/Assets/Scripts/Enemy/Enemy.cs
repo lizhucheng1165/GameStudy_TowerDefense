@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum EnemyType { NOMAL, SPEED, TANKER, BOSS, MIXED}
 public class Enemy : MonoBehaviour, InterFaces.IEnemy
@@ -18,6 +19,14 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
 
     protected EnemyType enemyType;
 
+    Slider hpBar;
+    Text healthPercentageText;
+
+
+    private void Start()
+    {
+        InitializeHPUI();
+    }
 
     public void GiveMoney(int lootGold)
     {
@@ -29,6 +38,14 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
         
     }
 
+    public void InitializeHPUI()
+    {
+        UIManager.Instance.hpBarDictionary.TryGetValue(this.transform, out GameObject hpBarGameObject);
+        hpBarGameObject.TryGetComponent<Slider>(out hpBar);
+        healthPercentageText = hpBarGameObject.GetComponentInChildren<Text>();
+        hpBar.value = 1.0f;
+        UpdateHealthPercentageText();
+    }
     public void GetWayPointsList()
     {
         wayPoints = new GameObject[4];
@@ -88,11 +105,22 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
     public void TakeDamage(int projectileDamage, int towerDamage)
     {
         currentHealth -= projectileDamage + towerDamage;
+        UpdateSliderValue();
+        UpdateHealthPercentageText();
         bool isDie = CheckHealth();
         if (isDie)
         {
             Die();
         }
+    }
+    public void UpdateSliderValue()
+    {
+        hpBar.value = (float)currentHealth / maxHealth;
+    }
+
+    public void UpdateHealthPercentageText()
+    {
+        healthPercentageText.text = currentHealth + " / " + maxHealth;
     }
 
     public bool CheckHealth()
@@ -108,9 +136,13 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
 
     public void Die()
     {
+
+        UIManager.Instance.hpBarDictionary.TryGetValue(this.transform, out GameObject hpBarToRemove);
+        UIManager.Instance.RemoveHpBar(this.transform, hpBarToRemove);
+
+        GameManager.Instance.EnemyCount--;
         GiveMoney(lootGold);
         Destroy(this.gameObject);
-        GameManager.Instance.EnemyCount--;
     }
 }
 

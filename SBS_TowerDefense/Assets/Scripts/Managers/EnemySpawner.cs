@@ -69,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
         GameManager.Instance.spawnCount++;
         GameManager.Instance.EnemyCount++;
 
-        AddHpBar(Enemy);
+        UIManager.Instance.AddHpBar(Enemy.transform);
     }
     private void StopSpawning()
     {
@@ -117,17 +117,7 @@ public class EnemySpawner : MonoBehaviour
         return (int)waveData[WaveIndex].WaveEnemyType;
     }
 
-    private void AddHpBar(GameObject enemy)
-    {
-        UIManager.Instance.enemyList.Add(enemy.transform);
-        GameObject hpBar = Instantiate(UIManager.Instance.HPBarPrefab, enemy.transform.position, Quaternion.identity, UIManager.Instance.HpBarCanvas);
-        UIManager.Instance.HPBarList.Add(hpBar);
-    }
-
-    public void RemoveHpBar(GameObject enemy, GameObject hpBar)
-    {
-        UIManager.Instance.enemyList.Remove(enemy.transform);
-        UIManager.Instance.HPBarList.Remove(hpBar);
-    }
+   
+    
    
 }

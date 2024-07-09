@@ -9,10 +9,13 @@ public class UIManager : Singleton<UIManager>
     public Text enemyCountText;
     public Text cancleText;
     public Text[] towerInfos;
+
     public GameObject HPBarPrefab;
     public List<Transform> enemyList = new List<Transform>();
     public List<GameObject> HPBarList = new List<GameObject>();
     public Transform HpBarCanvas;
+    //<Enemy, HpBar> //Å×½ºÆ®
+    public Dictionary<Transform, GameObject> hpBarDictionary  = new Dictionary<Transform, GameObject>();
 
     Camera mainCamera;
     protected override void Awake()
@@ -61,5 +64,19 @@ public class UIManager : Singleton<UIManager>
         {
             HPBarList[i].transform.position = mainCamera.WorldToScreenPoint(enemyList[i].position + new Vector3(0, 0.5f, 0));
         }
+    }
+    public void AddHpBar(Transform enemy)
+    {
+        enemyList.Add(enemy);
+        GameObject hpBar = Instantiate(HPBarPrefab, enemy.position, Quaternion.identity, HpBarCanvas);
+        HPBarList.Add(hpBar);
+
+        hpBarDictionary.Add(enemy, hpBar);
+    }
+    public void RemoveHpBar(Transform enemy, GameObject hpBar)
+    {
+        enemyList.Remove(enemy);
+        HPBarList.Remove(hpBar);
+        Destroy(hpBar);
     }
 }
