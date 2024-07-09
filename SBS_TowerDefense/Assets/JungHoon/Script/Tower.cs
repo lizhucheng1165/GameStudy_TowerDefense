@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TowerType
+{
+    ArcherTower,
+    SniperTower,
+    BombTower,
+    StickyTower
+}
+
 public class Tower : MonoBehaviour
 {
 
@@ -11,12 +19,12 @@ public class Tower : MonoBehaviour
     float fShootDelayTime;
     [SerializeField] bool bCanShoot;
     Coroutine coroutine;
+    public TowerType myTowerType;
 
     // Start is called before the first frame update
     void Start()
     {
         myProjectile = Instantiate(prefabProjectile);
-        myProjectile.GetComponent<Projectile>().setProjectileType(ProjectileType.ExplosiveBullet);
         myProjectile.GetComponent<Projectile>().initMyDamage(1.0f);
         myProjectile.GetComponent<Projectile>().myParentGameObject = this.gameObject;
         myProjectile.gameObject.transform.SetParent(this.gameObject.transform);
@@ -24,12 +32,42 @@ public class Tower : MonoBehaviour
         myProjectile.SetActive(false);
         fShootDelayTime = 1.0f;
         bCanShoot = true;
+
+        setTowerProjectile();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void setTowerProjectile()
+    {
+        if(myTowerType == TowerType.ArcherTower)
+        {
+            myProjectile.GetComponent<Projectile>().setProjectileType(ProjectileType.NormalBullet);
+        }
+        else if(myTowerType == TowerType.SniperTower)
+        {
+            myProjectile.GetComponent<Projectile>().setProjectileType(ProjectileType.NormalBullet);
+            myProjectile.GetComponent<Projectile>().initMyDamage(2.0f);
+        }
+        else if (myTowerType == TowerType.BombTower)
+        {
+            myProjectile.GetComponent<Projectile>().setProjectileType(ProjectileType.ExplosiveBullet);
+        }
+        else if (myTowerType == TowerType.StickyTower)
+        {
+            myProjectile.GetComponent<Projectile>().setProjectileType(ProjectileType.StickyType);
+        }
+
+    }
+
+    public void setTowerProjectileType()
+    {
+        //myTowerType = (TowerType)inputTowerType;
+        setTowerProjectile();
     }
 
     IEnumerator waitForShootableStatus(float fWaitTime)

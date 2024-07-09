@@ -46,6 +46,8 @@ public class TowerBaseTile : MonoBehaviour
         int nCurrentSelectedTowerNum = currentGameManager.nCurrentSelectedBuildTowerNumber;
         nCurrentSelectedTowerNum--;
         currentTower = Instantiate(arPrefabTower[nCurrentSelectedTowerNum]);
+        currentTower.GetComponent<Tower>().myTowerType = (TowerType)nCurrentSelectedTowerNum;
+        //currentTower.GetComponent<Tower>().setTowerProjectileType();
         currentTower.gameObject.transform.SetParent(this.gameObject.transform);
         currentTower.transform.localPosition = new Vector3(0, 0, 0);
         currentTower.transform.localScale = new Vector3(5.0f, 5.0f, 1.0f);

@@ -115,13 +115,14 @@ public class WaveManager : MonoBehaviour
         nCurrentWaveMaxEnemyCount = arGameWaveList[nWaveListIndex].nCreateEnemyCount;
         //currentGameManager.setMaxEnemyCount(nCurrentWaveMaxEnemyCount);
 
-        InvokeRepeating("generateEnemy", 0.5f, 0.25f);
+        InvokeRepeating("generateEnemy", 0.5f, 0.5f);
     }
 
     void generateEnemy()
     {
 
         GameObject testEnemy = Instantiate(prefabEnemy);
+        testEnemy.name += nEnemyGeneratingCount.ToString();
         testEnemy.transform.position = new Vector3(-30.0f, 30.0f, -2.0f);
         nEnemyGeneratingCount++;
        // nTotalEnemyCount++;

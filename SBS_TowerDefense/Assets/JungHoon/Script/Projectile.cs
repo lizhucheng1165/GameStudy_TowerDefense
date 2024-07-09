@@ -14,13 +14,11 @@ public class Projectile : MonoBehaviour
     public GameObject myParentGameObject;
     public GameObject myTarget;
     Vector3 vec3MoveVector;
-    float fDamage;
+    [SerializeField] float fDamage;
     SphereCollider mySphereCollider;
-    ProjectileType currentProjectileType;
-    //float fDistanceToTargetPosition;
+    [SerializeField] ProjectileType currentProjectileType;
     int nCollideCount;
-    List<GameObject> arDetectedEnemy = new List<GameObject>();
-    //bool bHit;
+    //List<GameObject> arDetectedEnemy = new List<GameObject>();
     [SerializeField] Material mBullet_Normal;
     [SerializeField] Material mBullet_Bomb;
     [SerializeField] Material mBullet_Sticky;
@@ -28,12 +26,8 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //this.gameObject.transform.position = Vector3.zero;
-        //fDistanceToTargetPosition = 0f;
         mySphereCollider = this.GetComponent<SphereCollider>();
         nCollideCount = 0;
-        //bHit = false;
-        //Debug.Log("detected enemy array count: " + arDetectedEnemy.Count);
 
     }
 
@@ -43,42 +37,13 @@ public class Projectile : MonoBehaviour
         if (myTarget != null)
         {
             moveToTarget();
-            //findDistanceToTargetLocation();
         }
-
-
-
-        //Debug.Log("dist to target: "+fDistanceToTargetPosition);
-        //if(fDistanceToTargetPosition <= 1.0f)
-        //{
-        //    setColliderActive(true);
-        //    Debug.Log("collider active..");
-        //}
-
     }
-
-    //bool findDistanceToTargetLocation()
-    //{
-    //    fDistanceToTargetPosition = Vector3.Distance(myTarget.transform.position, this.gameObject.transform.position);
-
-    //    return true;
-    //}
-
-    //public void setColliderActive(bool bActive)
-    //{
-    //    mySphereCollider.enabled = bActive;
-    //}
-
-    //public void initExplosiveBullet()
-    //{
-    //    mySphereCollider = this.GetComponent<SphereCollider>();
-
-    //}
 
     void resizeColliderRadius(ProjectileType currentType)
     {
         mySphereCollider.radius = 0.5f;
-        if (currentType == ProjectileType.ExplosiveBullet)
+        if (currentType == ProjectileType.ExplosiveBullet || currentType == ProjectileType.StickyType)
         {
             mySphereCollider.radius = 3.0f;
             Debug.Log("Radius expand to 3.0f");
@@ -129,47 +94,27 @@ public class Projectile : MonoBehaviour
             Debug.Log("OnTriggerEntered..");
             resizeColliderRadius(currentProjectileType);
             vec3MoveVector = Vector3.zero;
-
-            //other.gameObject.GetComponent<Enemy>().minusMyHealth(fDamage);
-
-            //this.gameObject.transform.localPosition = Vector3.zero;
-            //myTarget = null;
-            //this.gameObject.SetActive(false);
-            //mySphereCollider.radius = 0.5f;
+            //Invoke("resetProjectilePosition", 0.05f);
         }
 
         if (other.CompareTag("Enemy") == true)
         {
-            //this.gameObject.transform.localPosition = Vector3.zero;
-            //myTarget = null;
-            //this.gameObject.SetActive(false);
-            //Debug.Log("OnTriggerEntered..");
-            //other.gameObject.GetComponent<Enemy>().minusMyHealth(fDamage);
-
-            arDetectedEnemy.Add(other.gameObject);
+            //arDetectedEnemy.Add(other.gameObject);
             nCollideCount++;
-            //Debug.Log("collideCount: " + nCollideCount);
 
             other.gameObject.GetComponent<Enemy>().minusMyHealth(fDamage);
-            other.gameObject.GetComponent<Enemy>().minusMySpeed(0.05f);
-            //this.gameObject.transform.localPosition = Vector3.zero;
-            //myTarget = null;
-            //this.gameObject.SetActive(false);
-            //mySphereCollider.radius = 0.5f;
-            Debug.Log("detected enemy array count: " + arDetectedEnemy.Count);
+            
+            if (currentProjectileType == ProjectileType.StickyType)
+            {
+                other.gameObject.GetComponent<Enemy>().minusMySpeed(0.05f);
+            }
+            //Debug.Log("detected enemy array count: " + arDetectedEnemy.Count);
+            Debug.Log(nCollideCount + "-" + other.name);
+
         }
 
-
-        //int nTargetCount = 0;
-        //while(nTargetCount < arDetectedEnemy.Count)
-        //{
-        //    arDetectedEnemy[nTargetCount].GetComponent<Enemy>().minusMyHealth(fDamage);
-        //    nTargetCount++;
-        //}
-
-        Invoke("resetProjectilePosition", 0.25f);
+        Invoke("resetProjectilePosition", 0.15f);
         
-
     }
 
     void resetProjectilePosition()
@@ -178,8 +123,9 @@ public class Projectile : MonoBehaviour
         myTarget = null;
         this.gameObject.SetActive(false);
         mySphereCollider.radius = 0.5f;
-        arDetectedEnemy.Clear();
-        Debug.Log("arDetectedEnemy cleared.. now:" + arDetectedEnemy.Count);
+        //arDetectedEnemy.Clear();
+        //Debug.Log("arDetectedEnemy cleared.. now:" + arDetectedEnemy.Count);
+        nCollideCount = 0;
         CancelInvoke();
     }
 
