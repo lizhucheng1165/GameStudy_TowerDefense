@@ -69,6 +69,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void minusMySpeed(float fMinusSpeed)
+    {
+        fEnemySpeed -= fMinusSpeed;
+        if(fEnemySpeed <= 0.05f)
+        {
+            fEnemySpeed = 0.05f;
+        }
+    }
+
     public void destroyCurrentEnemy()
     {
         currentInGameManager.addCurrentGold(10);

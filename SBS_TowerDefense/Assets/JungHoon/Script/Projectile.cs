@@ -21,6 +21,9 @@ public class Projectile : MonoBehaviour
     int nCollideCount;
     List<GameObject> arDetectedEnemy = new List<GameObject>();
     //bool bHit;
+    [SerializeField] Material mBullet_Normal;
+    [SerializeField] Material mBullet_Bomb;
+    [SerializeField] Material mBullet_Sticky;
 
     // Start is called before the first frame update
     void Start()
@@ -84,6 +87,23 @@ public class Projectile : MonoBehaviour
     public void setProjectileType(ProjectileType nInputType)
     {
         currentProjectileType = nInputType;
+        SetProjectileMaterial();
+    }
+
+    void SetProjectileMaterial()
+    {
+        if(currentProjectileType == ProjectileType.NormalBullet)
+        {
+            this.GetComponent<MeshRenderer>().material = mBullet_Normal;
+        }
+        else if(currentProjectileType == ProjectileType.ExplosiveBullet)
+        {
+            this.GetComponent<MeshRenderer>().material = mBullet_Bomb;
+        }
+        else if (currentProjectileType == ProjectileType.StickyType)
+        {
+            this.GetComponent<MeshRenderer>().material = mBullet_Sticky;
+        }
     }
 
     public void initMyDamage(float fInputDamage)
@@ -131,6 +151,7 @@ public class Projectile : MonoBehaviour
             //Debug.Log("collideCount: " + nCollideCount);
 
             other.gameObject.GetComponent<Enemy>().minusMyHealth(fDamage);
+            other.gameObject.GetComponent<Enemy>().minusMySpeed(0.05f);
             //this.gameObject.transform.localPosition = Vector3.zero;
             //myTarget = null;
             //this.gameObject.SetActive(false);
