@@ -65,9 +65,11 @@ public class EnemySpawner : MonoBehaviour
    
     private void SpawnEnemy()
     {
-        Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
+        GameObject Enemy = Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
         GameManager.Instance.spawnCount++;
         GameManager.Instance.EnemyCount++;
+
+        AddHpBar(Enemy);
     }
     private void StopSpawning()
     {
@@ -114,4 +116,18 @@ public class EnemySpawner : MonoBehaviour
 
         return (int)waveData[WaveIndex].WaveEnemyType;
     }
+
+    private void AddHpBar(GameObject enemy)
+    {
+        UIManager.Instance.enemyList.Add(enemy.transform);
+        GameObject hpBar = Instantiate(UIManager.Instance.HPBarPrefab, enemy.transform.position, Quaternion.identity, UIManager.Instance.HpBarCanvas);
+        UIManager.Instance.HPBarList.Add(hpBar);
+    }
+
+    public void RemoveHpBar(GameObject enemy, GameObject hpBar)
+    {
+        UIManager.Instance.enemyList.Remove(enemy.transform);
+        UIManager.Instance.HPBarList.Remove(hpBar);
+    }
+   
 }
