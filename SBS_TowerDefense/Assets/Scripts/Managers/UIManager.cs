@@ -8,6 +8,7 @@ public class UIManager : Singleton<UIManager>
     public Text moneyText;
     public Text enemyCountText;
     public Text cancleText;
+    public Text[] towerInfos;
     protected override void Awake()
     {
         base.Awake();
@@ -28,5 +29,12 @@ public class UIManager : Singleton<UIManager>
     public void SetUpTowerSpawnCancleUI()
     {
         cancleText.enabled = !cancleText.enabled;
+    }
+
+    public void ShowTowerInfo(string towerName, int towerPrice, string towerDescription)
+    {
+        towerInfos[0].text = towerName;
+        towerInfos[1].text = towerPrice.ToString();
+        towerInfos[2].text = towerDescription;
     }
 }

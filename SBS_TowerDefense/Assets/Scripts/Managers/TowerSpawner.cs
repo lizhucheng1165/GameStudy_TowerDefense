@@ -9,8 +9,7 @@ public class TowerSpawner : MonoBehaviour
     Button button;
     public Tile[] tiles;
     public TowerType towerType;
-    //public GameObject towerInfoUI;
-    //RectTransform towerInfoUIRectTransform;
+    public TowerData[] towerDatas;
     private void Awake()
     {
         if (TryGetComponent<Button>(out button))
@@ -33,14 +32,17 @@ public class TowerSpawner : MonoBehaviour
         }
          
     }
-    private void OnMouseOver()
-    {
-        //print("마우스오버");
-        ////마우스위치에 UI를 띄운다
-        //RectTransformUtility.ScreenPointToLocalPointInRectangle(towerInfoUIRectTransform, Input.mousePosition, null, out Vector2 localPoint);
-        //towerInfoUIRectTransform.anchoredPosition = localPoint;
-    }
     
+    private void OnMouseEnter()
+    {
+        UIManager.Instance.ShowTowerInfo(towerDatas[(int)towerType].name, towerDatas[(int)towerType].Price, towerDatas[(int)towerType].TowerDescription);
+        MoveUIWithMouse.isMouseOverButton = true;
+    }
+    private void OnMouseExit()
+    {
+        MoveUIWithMouse.isMouseOverButton = false;
+    }
+
     public void AddEvents(Tile tile)
     {
         switch (towerType)

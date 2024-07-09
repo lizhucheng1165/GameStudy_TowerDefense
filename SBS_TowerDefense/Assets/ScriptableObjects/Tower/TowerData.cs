@@ -18,5 +18,8 @@ public class TowerData : ScriptableObject
     [SerializeField]
     private TowerType towerType;
     public TowerType TowerType { get { return towerType; } }
+    [SerializeField]
+    private string towerDescription;
+    public string TowerDescription { get { return towerDescription; } }
 
 }
