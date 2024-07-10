@@ -40,6 +40,7 @@ public class GameManager : Singleton<GameManager>
     }
     public int enemyTotalHealth { get; set; }
     public Tile[] tiles;
+    public bool isLastWave = false;
 
     protected override void Awake()
     {

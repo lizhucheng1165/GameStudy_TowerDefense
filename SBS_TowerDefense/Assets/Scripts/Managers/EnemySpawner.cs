@@ -22,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
+                GameManager.Instance.isLastWave = true;
                 print("waveIndex가 너무 큽니다");
             }
         }
@@ -56,6 +57,11 @@ public class EnemySpawner : MonoBehaviour
         if (GameManager.Instance.spawnCount >= waveData[WaveIndex].EnemySpawnMaxCount)
         {
             StopSpawning();
+            if (!GameManager.Instance.isLastWave)
+            {
+                AddWaveIndex();
+            }
+
         }
         if (UpdateElapsedTime())
         {
@@ -75,7 +81,6 @@ public class EnemySpawner : MonoBehaviour
     {
         CancelInvoke("SpawnEnemy");
         GameManager.Instance.spawnCount = 0;
-        AddWaveIndex();
     }
 
     private void StartSpawnCurrentWave()
@@ -84,7 +89,10 @@ public class EnemySpawner : MonoBehaviour
         {
             GameManager.Instance.SumAllEnemiesCurrentHealth();
         }
-        InvokeRepeating("SpawnEnemy", maintenanceTime, GameManager.Instance.spawnInterval);
+        if (!GameManager.Instance.isLastWave)
+        {
+            InvokeRepeating("SpawnEnemy", maintenanceTime, GameManager.Instance.spawnInterval);
+        }
     }
 
     private bool UpdateElapsedTime()
