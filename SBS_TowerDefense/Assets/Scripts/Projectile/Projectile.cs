@@ -44,7 +44,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 6)
+        if (other.gameObject.layer == 6 && other.gameObject == currentTarget)
         {
             if (other.TryGetComponent<Enemy>(out Enemy enemy))
             {

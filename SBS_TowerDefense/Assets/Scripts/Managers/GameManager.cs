@@ -101,4 +101,15 @@ public class GameManager : Singleton<GameManager>
         }
         return false;
     }
+
+    public void SumAllEnemiesCurrentHealth()
+    {
+        foreach (Transform enemy in UIManager.Instance.enemyList)
+        {
+            if (enemy.TryGetComponent<Enemy>(out Enemy enemyComponent))
+            {
+                enemyTotalHealth += enemyComponent.currentHealth;
+            }
+        }
+    }
 }

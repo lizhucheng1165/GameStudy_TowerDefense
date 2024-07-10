@@ -80,6 +80,10 @@ public class EnemySpawner : MonoBehaviour
 
     private void StartSpawnCurrentWave()
     {
+        if (waveData[WaveIndex].WaveEnemyType == EnemyType.BOSS)
+        {
+            GameManager.Instance.SumAllEnemiesCurrentHealth();
+        }
         InvokeRepeating("SpawnEnemy", maintenanceTime, GameManager.Instance.spawnInterval);
     }
 
@@ -99,6 +103,7 @@ public class EnemySpawner : MonoBehaviour
     private void AddWaveIndex()
     {
         WaveIndex++;
+        print("웨이브 인덱스 증가 : " + WaveIndex);
     }
 
     private GameObject GetWavePrefab()
@@ -119,5 +124,5 @@ public class EnemySpawner : MonoBehaviour
 
    
     
-   
+
 }
