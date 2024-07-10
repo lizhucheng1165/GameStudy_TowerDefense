@@ -19,8 +19,33 @@ public class BossEnemy : Enemy
         MoveArround();
     }
 
+    private void OnEnable()
+    {
+        KillAllExistingEnemies();
+    }
+
     void AddTotalHelth(int currentHealth)
     {
         maxHealth += currentHealth;
+    }
+
+    void KillAllExistingEnemies()
+    {
+        //foreach (Transform item in UIManager.Instance.enemyList)
+        //{
+        //    if (!item.TryGetComponent<BossEnemy>(out BossEnemy boss))
+        //    {
+        //        UIManager.Instance.enemyList.Remove(item);
+        //        Destroy(item.gameObject);
+        //    }
+        //}
+        //foreach (GameObject item in UIManager.Instance.HPBarList)
+        //{
+        //    if (!item.TryGetComponent<BossEnemy>(out BossEnemy boss))
+        //    {
+        //        UIManager.Instance.HPBarList.Remove(item);
+        //        Destroy(item);
+        //    }
+        //}
     }
 }
