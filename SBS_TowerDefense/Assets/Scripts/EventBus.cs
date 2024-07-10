@@ -4,7 +4,9 @@ using UnityEngine.Events;
 
 public enum EventBusType
 {
-    GAMESTART, WAVE_START, WAVE_STOP, BREAKTIME_START, TIMER_END
+    GAMESTART, WAVE_START, WAVE_STOP, BREAKTIME_START, 
+    BUY_TOWER, 
+    MONSTER_HIT, MONSTER_DEATH
 }
 
 public class EventBus : MonoBehaviour

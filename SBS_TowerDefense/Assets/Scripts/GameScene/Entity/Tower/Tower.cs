@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Tower : MonoBehaviour
 {
@@ -20,6 +22,17 @@ public class Tower : MonoBehaviour
     [SerializeField] private bool isControllable;
     [SerializeField] private List<TowerModifier> m_modifiers;
 
+    private GameObject m_minRangeIndicatorPrefab;
+    private GameObject m_maxRangeIndicatorPrefab;
+
+    private GameObject m_minRangeIndicatorInstance;
+    private GameObject m_maxRangeIndicatorInstance;
+
+    float firstDistance = 0;
+    private Transform target;
+
+    private bool isSelected;
+
     public int towerId { get { return m_towerId; } set { m_towerId = value; } }
     public string towerName { get { return m_towerName; } set { m_towerName = value; } }
     public string description { get { return m_description; } set { m_description = value; } }
@@ -36,14 +49,139 @@ public class Tower : MonoBehaviour
     public bool IsControllable { get { return isControllable; } set { isControllable = value; } }
     public List<TowerModifier> modifiers { get { return m_modifiers; } set { m_modifiers = value; } }
 
+    public void Awake()
+    {
+        m_minRangeIndicatorPrefab = Resources.Load<GameObject>("Prefabs/Towers/Indicators/MinRangeIndicator");
+        m_maxRangeIndicatorPrefab = Resources.Load<GameObject>("Prefabs/Towers/Indicators/MaxRangeIndicator");
+    }
+
+    IEnumerator fire()  //멀티스레드
+    {
+        while (true)
+        {
+            if (target != null)
+            {
+                foreach (Bullet bullet in m_bulletList)
+                {
+                    Bullet spawnBullet = Instantiate<Bullet>(bullet, transform.position, transform.rotation);
+                    spawnBullet.tower = this;
+                    if (m_bulletList.Count == 1)
+                        spawnBullet.targetTransform = this.transform.forward;
+                    else if (m_bulletList.Count >= 2)
+                    {
+                        if (m_bulletAngle <= 0)
+                            m_bulletAngle = 45;
+                        float randomAngle = Random.Range(-m_bulletAngle / 2f, m_bulletAngle / 2f);
+                        Quaternion randomRotation = Quaternion.AngleAxis(randomAngle, transform.up);
+
+                        spawnBullet.targetTransform = randomRotation * transform.forward;
+                    }
+                }
+            }
+            yield return new WaitForSeconds(1 / (m_rpm / 60));
+        }
+    }
+
+    private bool FindTarget()
+    {
+        // 사정거리 내에 있는 몬스터를 찾는다
+        Collider[] colliders = Physics.OverlapSphere(transform.position, m_maxRange);
+
+        if (colliders == null || colliders.Length <= 0)
+            return false;
+
+        firstDistance = Vector3.Distance(transform.position, colliders[0].transform.position);
+
+        if (target != null)
+        {
+            // 기존 타겟이 여전히 사정거리 내에 있는지 확인
+            float distance = Vector3.Distance(transform.position, target.transform.position);
+            if (distance <= m_maxRange)
+                return true;
+            else
+            {
+                target = null;
+                firstDistance = 0f;
+            }
+        }
+
+        foreach (Collider collider in colliders)
+        {
+            // 몬스터 태그가 붙은 게임 오브젝트를 찾는다
+            if (collider.CompareTag("Monster"))
+            {
+                Monster monster = collider.GetComponent<Monster>();
+                float distance = Vector3.Distance(transform.position, collider.transform.position);
+
+                // 우선순위 타겟 타입과 사정거리에 부합하는 경우 target으로 설정한다
+                if (priorityTargetRange == Enums.RangeType.Short)
+                {
+                    if (distance < firstDistance)
+                    {
+                        firstDistance = distance;
+                        target = collider.transform;
+                    }
+                }
+                else if (priorityTargetRange == Enums.RangeType.Long)
+                {
+                    if (distance > firstDistance)
+                    {
+                        firstDistance = distance;
+                        target = collider.transform;
+                    }
+                }
+            }
+        }
+
+        // 사정거리 내에 우선순위 타겟이 없으면 target을 null로 설정한다
+        if (firstDistance == 0)
+        {
+            target = null;
+            return false;
+        }
+
+        return true;
+    }
+
+    private void LookAtTarget()
+    {
+        // 타워가 몬스터를 계속 쳐다보도록 한다
+        if (target != null)
+        {
+            transform.LookAt(target);
+        }
+    }
+
     void Start()
     {
-        
+        StartCoroutine(fire());
     }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        FindTarget();
+        LookAtTarget();
+    }
+
+    private void OnMouseDown()
+    {
+        if (!isSelected)
+        {
+            m_maxRangeIndicatorInstance = Instantiate(m_maxRangeIndicatorPrefab, transform.position, Quaternion.identity);
+            m_maxRangeIndicatorInstance.transform.localScale = new Vector3(m_maxRange * 2, 0.1f, m_maxRange * 2);
+            m_maxRangeIndicatorInstance.transform.position = transform.position;        
+
+            m_minRangeIndicatorInstance = Instantiate(m_minRangeIndicatorPrefab, transform.position, Quaternion.identity);
+            m_minRangeIndicatorInstance.transform.localScale = new Vector3(m_minRange * 2, 0.1f, m_minRange * 2);
+            m_minRangeIndicatorInstance.transform.position = transform.position;
+            isSelected = true;
+        }
+        else
+        {
+            Destroy(m_maxRangeIndicatorInstance);
+            Destroy(m_minRangeIndicatorInstance);
+            isSelected = false;
+        }
     }
 }

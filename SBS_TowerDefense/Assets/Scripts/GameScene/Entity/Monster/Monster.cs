@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Monster : MonoBehaviour
 {
@@ -31,6 +33,13 @@ public class Monster : MonoBehaviour
     private Transform[] waypoints;
     private int currentWaypoint = 0;
 
+    private Image m_healthBarFront;
+    private Image m_healthBarBack;
+    private TextMeshProUGUI m_tmpDamage;
+
+    private float m_healthBarDuration = 2f;
+    private float m_damageDuration = 0.7f;
+
     private void Awake()
     {
         waypoints = new Transform[4];
@@ -38,6 +47,14 @@ public class Monster : MonoBehaviour
         {
             waypoints[i] = GameObject.Find("Waypoint_"+i).transform;
         }
+
+        m_healthBarFront = transform.Find("Canvas/Image_HPBar_Front").GetComponent<Image>();
+        m_healthBarBack = transform.Find("Canvas/Image_HPBar_Back").GetComponent<Image>();
+        m_tmpDamage = transform.Find("Canvas/TMP_Damage").GetComponent<TextMeshProUGUI>();
+        m_healthBarFront.enabled = false;
+        m_healthBarBack.enabled = false;
+        m_tmpDamage.enabled = false;
+
     }
 
     private void Update()
@@ -54,5 +71,77 @@ public class Monster : MonoBehaviour
                 currentWaypoint = 0; // 마지막 웨이포인트에 도달하면 처음으로 돌아감
             }
         }
+    }
+
+    public float TakeDamage(Bullet bullet)
+    {
+        float finalDamage = calcCritDamage((bullet.damage - (bullet.damage * m_damageReduceMultiplier) - m_armor), bullet.critcalChance, bullet.criticalDamageMultiplier);
+        if (finalDamage <= 0)
+            finalDamage = 1;
+        m_currentHealth -= finalDamage;
+        float updatedHealthBarSizeX = m_healthBarFront.rectTransform.sizeDelta.x * (m_currentHealth / m_maxHealth);
+
+        if (updatedHealthBarSizeX >= 0)
+            m_healthBarFront.rectTransform.sizeDelta = new Vector2(updatedHealthBarSizeX, m_healthBarFront.rectTransform.sizeDelta.y);
+
+        StartCoroutine(ShowImage(m_healthBarDuration, m_healthBarBack));
+        StartCoroutine(ShowImage(m_healthBarDuration, m_healthBarFront));
+        StartCoroutine(ShowTMP(m_damageDuration, m_tmpDamage));
+
+        if (m_currentHealth < 0)
+            Death();
+        return finalDamage;
+    }
+
+    private float calcCritDamage(float damage, float towerCritChance, float towerCritDamage)
+    {
+        float finalDamage = damage;
+        float critChance = Random.Range(0f, 1f);
+
+        m_tmpDamage.text = string.Format("{0:F0}", finalDamage);
+        m_tmpDamage.color = Color.white;
+        m_tmpDamage.fontStyle = 0;
+
+        if (critChance <= towerCritChance)
+        {
+            finalDamage = damage * towerCritDamage;
+            m_tmpDamage.text = string.Format("{0:F0}", finalDamage) + "!!";
+            m_tmpDamage.color = new Color(1f, 0.3f, 0, 1);
+            m_tmpDamage.fontStyle = FontStyles.Bold | FontStyles.Italic;
+        }
+
+        return finalDamage;
+    }
+
+    private void Death()
+    {
+        EventBus.Publish(EventBusType.MONSTER_DEATH);
+        Destroy(gameObject);
+    }
+
+    IEnumerator ShowTMP(float duration, TextMeshProUGUI tmp)
+    {
+        tmp.enabled = true;
+
+        while (duration >= 0)
+        {
+            duration -= 0.1f;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        tmp.enabled = false;
+    }
+
+    IEnumerator ShowImage(float duration, Image image)
+    {
+        image.enabled = true;
+
+        while (duration >= 0)
+        {
+            duration -= 0.1f;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        image.enabled = true;
     }
 }

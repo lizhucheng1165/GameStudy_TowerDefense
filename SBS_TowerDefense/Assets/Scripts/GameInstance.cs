@@ -32,10 +32,13 @@ public class GameInstance : Singleton<GameInstance>
 
     public GameObject lobbyUIManager { get { return m_lobbyUIManager;} set { m_lobbyUIManager = value; } }
     public GameObject gameUIManager { get { return m_gameUIManager; } set { m_gameUIManager = value; } }
+    public GameObject gameManager { get { return m_gameManager; } set { m_gameManager = value; } }
     public int difficulty { get { return m_difficulty; } set { m_difficulty = value; } }
     public int bestWave { get { return m_bestWave; } set { m_bestWave = value; } }
     public int currentWave { get { return m_currentWave; } set { m_currentWave = value; } }
     public MonsterConfig monsterConfig { get { return m_monsterConfig; } set { m_monsterConfig = value; } }
+    public BulletConfig bulletConfig { get { return m_bulletConfig; } set { m_bulletConfig = value; } }
+    public TowerConfig towerConfig { get { return m_towerConfig; } set { m_towerConfig = value; } }
     public WaveConfig waveConfig { get { return m_waveConfig; } set { m_waveConfig = value; } }
     
     private void Start()

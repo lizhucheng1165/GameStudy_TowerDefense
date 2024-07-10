@@ -9,10 +9,13 @@ public class GameManager : MonoBehaviour
 {
     private TileFactory m_tileFactory;
     private MonsterFactory m_monsterFactory;
+    private TowerFactory m_towerFactory;
     private Player m_player;
     private Tile[,] m_tiles;
     private GameUIManager m_gameUIManager;
     private int m_monsterCount;
+
+    public Player player { get { return m_player; } }
 
     private Coroutine timerCoroutine;
     private void Awake()
@@ -21,11 +24,17 @@ public class GameManager : MonoBehaviour
         //m_gameUIManager.timerUI = GameInstance.Instance.gameUIManager.GetComponent<GameUIManager>().timerUI;
         //m_tmpMonsterCount = GameInstance.Instance.gameUIManager.GetComponent<GameUIManager>().monsterCountUI;
         m_player = new Player();
+        m_player.money = 100;
         m_tileFactory = new TileFactory(GameInstance.Instance.tilePrefab.GetComponent<Tile>());
         m_monsterFactory = new MonsterFactory();
+        m_towerFactory = new TowerFactory();
         EventBus.Subscribe(EventBusType.GAMESTART, breakTimeStart);
         EventBus.Subscribe(EventBusType.BREAKTIME_START, breakTimeStart);
         EventBus.Subscribe(EventBusType.WAVE_START, startWave);
+        EventBus.Subscribe(EventBusType.BUY_TOWER, buyTower);
+        EventBus.Subscribe(EventBusType.MONSTER_DEATH, monsterReward);
+
+        m_gameUIManager.setMoneyUI(m_player.money);
     }
 
     // Start is called before the first frame update
@@ -70,7 +79,7 @@ public class GameManager : MonoBehaviour
     private void breakTimeStart()
     {
         m_gameUIManager.changeTimerUIColor(new Color(0, 0, 0));
-        StartCoroutine(SetTimer(15, EventBusType.BREAKTIME_START));
+        StartCoroutine(SetTimer(3, EventBusType.BREAKTIME_START));
     }
 
     private void startWave()
@@ -90,5 +99,23 @@ public class GameManager : MonoBehaviour
             if (wave.spawnMonsterId == GameInstance.Instance.currentWave)
                 StartCoroutine(SpawnMonsterForSecond(wave.spawnCount, wave.spawnInterval, wave.spawnMonsterId));
         }
+    }
+
+    private void buyTower()
+    {
+        if (m_player.money >= 100)
+        {
+            Tile selectedTile = m_gameUIManager.selectedObject.GetComponent<Tile>();
+            m_player.money -= 100;
+            Tower spawnedTower = m_towerFactory.SpawnTower(selectedTile, 0);
+            m_gameUIManager.setMoneyUI(m_player.money);
+        }
+    }
+
+    private void monsterReward()
+    {
+        m_player.money += 5 + GameInstance.Instance.currentWave;
+        m_monsterCount--;
+        m_gameUIManager.setMoneyUI(m_player.money);
     }
 }

@@ -7,4 +7,6 @@ using UnityEngine;
 public class BulletConfig : ScriptableObject
 {
     [SerializeField] private List<Bullet> m_bullets;
+
+    public List<Bullet> bullets {  get { return m_bullets; } }
 }
