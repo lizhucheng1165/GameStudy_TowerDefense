@@ -66,7 +66,6 @@ public class Tower : MonoBehaviour
 
     public void setTowerProjectileType()
     {
-        //myTowerType = (TowerType)inputTowerType;
         setTowerProjectile();
     }
 
@@ -74,7 +73,6 @@ public class Tower : MonoBehaviour
     {
         yield return new WaitForSeconds(fWaitTime);
         bCanShoot = true;
-        //Debug.Log("now can shoot!");
     }
 
     void shootProjectile(GameObject currentTargetGameObject)
@@ -91,7 +89,6 @@ public class Tower : MonoBehaviour
         if (currentTargetEnemy == null && other.CompareTag("Enemy") == true)
         {
             currentTargetEnemy = other.gameObject;
-            //shootProjectile(currentTargetEnemy);
         }
     }
 
@@ -100,14 +97,11 @@ public class Tower : MonoBehaviour
         if (currentTargetEnemy == null && other.CompareTag("Enemy") == true)
         {
             currentTargetEnemy = other.gameObject;
-            //shootProjectile(currentTargetEnemy);
         }
 
         if (currentTargetEnemy != null && bCanShoot == true)
         {
-            //currentTargetEnemy = other.gameObject;
             shootProjectile(currentTargetEnemy);
-            //coroutine = StartCoroutine(waitForShootableStatus(fShootDelayTime));
         }
     }
 
@@ -116,7 +110,6 @@ public class Tower : MonoBehaviour
         if (other.gameObject == currentTargetEnemy)
         {
             currentTargetEnemy = null;
-            //StopCoroutine(coroutine);
         }
     }
 }

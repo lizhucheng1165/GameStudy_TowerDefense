@@ -12,31 +12,20 @@ public class InGameManager : MonoBehaviour
     [SerializeField] GameObject objectGameBoard;
     [SerializeField] UIManager currentUIManager;
     [SerializeField] WaveManager currentWaveManager;
-
     public List<GameObject> arrBoardTile = new List<GameObject>();
-    //int nEnemyGeneratingCount;
-
     int nCurrentGold;
     int nEnemyKilled;
     int nLeftEnemy;
     int nMaxEnemyCount;
     int nCurrentWave;
     int nLastWave;
-
     public int nCurrentSelectedBuildTowerNumber;
-
-    //public List<Button> arBuildTowerBtn;
-
-    //public List<Wave> arGameWaveList = new List<Wave>();
 
     // Start is called before the first frame update
     void Start()
     {
         initGameStatus();
-        //currentWaveManager.initGameWaveInfo(nLastWave);
         generateBaseTile(7);
-        //startWave();
-        
     }
 
     // Update is called once per frame
@@ -126,7 +115,6 @@ public class InGameManager : MonoBehaviour
     void initGameStatus()
     {
         nCurrentGold = 30;
-        //nEnemyGeneratingCount = 0;
         nEnemyKilled = 0;
         nLeftEnemy = 0;
         nMaxEnemyCount = 0;
@@ -134,49 +122,6 @@ public class InGameManager : MonoBehaviour
         nLastWave = 5;
         nCurrentSelectedBuildTowerNumber = 0;
     }
-
-    //void initGameWaveInfo(int nLastWaveCount)
-    //{
-    //    int nWaveCount = 0;
-    //    while (nWaveCount < nLastWaveCount)
-    //    {
-    //        Wave newWave = new Wave();
-    //        newWave.nMyWaveNumber = nWaveCount;
-    //        newWave.nCreateEnemyCount = 3;
-    //        arGameWaveList.Add(newWave);
-    //        nWaveCount++;
-    //        Debug.Log(newWave.nMyWaveNumber + " newWave created and added..");
-    //    }
-    //}
-
-    //public void startWave()
-    //{
-    //    nCurrentWave++;
-    //    currentUIManager.updateCurrentWave();
-        
-    //    int nWaveListIndex;
-
-    //    nWaveListIndex = nCurrentWave - 1;
-    //    nMaxEnemyCount = currentWaveManager.arGameWaveList[nWaveListIndex].nCreateEnemyCount;
-
-    //    InvokeRepeating("generateEnemy", 0.5f, 1.0f);
-    //}
-
-    //void generateEnemy()
-    //{
-        
-    //    GameObject testEnemy = Instantiate(prefabEnemy);
-    //    testEnemy.transform.position = new Vector3(-30.0f, 30.0f, -2.0f);
-    //    nEnemyGeneratingCount++;
-    //    addLeftEnemyCount();
-
-    //    if(nEnemyGeneratingCount >= nMaxEnemyCount)
-    //    {
-    //        CancelInvoke("generateEnemy");
-    //        nEnemyGeneratingCount = 0;
-    //    }
-
-    //}
 
     void generateBaseTile(int nSideSize)
     {

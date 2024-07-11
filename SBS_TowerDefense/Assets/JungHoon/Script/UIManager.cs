@@ -55,8 +55,6 @@ public class UIManager : MonoBehaviour
 
     public void updateCurrentWave()
     {
-        //textCurrentWave.text = currentInGameManager.getCurrentWaveNumber().ToString();
-        //Debug.Log("wave num:" + currentWaveManager.getCurrentWaverNumber().ToString());
         textCurrentWave.text = currentWaveManager.getCurrentWaverNumber().ToString();
     }
     

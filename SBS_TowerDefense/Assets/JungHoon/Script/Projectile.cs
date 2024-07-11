@@ -18,7 +18,6 @@ public class Projectile : MonoBehaviour
     SphereCollider mySphereCollider;
     [SerializeField] ProjectileType currentProjectileType;
     int nCollideCount;
-    //List<GameObject> arDetectedEnemy = new List<GameObject>();
     [SerializeField] Material mBullet_Normal;
     [SerializeField] Material mBullet_Bomb;
     [SerializeField] Material mBullet_Sticky;
@@ -94,12 +93,10 @@ public class Projectile : MonoBehaviour
             Debug.Log("OnTriggerEntered..");
             resizeColliderRadius(currentProjectileType);
             vec3MoveVector = Vector3.zero;
-            //Invoke("resetProjectilePosition", 0.05f);
         }
 
         if (other.CompareTag("Enemy") == true)
         {
-            //arDetectedEnemy.Add(other.gameObject);
             nCollideCount++;
 
             other.gameObject.GetComponent<Enemy>().minusMyHealth(fDamage);
@@ -108,7 +105,6 @@ public class Projectile : MonoBehaviour
             {
                 other.gameObject.GetComponent<Enemy>().minusMySpeed(0.05f);
             }
-            //Debug.Log("detected enemy array count: " + arDetectedEnemy.Count);
             Debug.Log(nCollideCount + "-" + other.name);
 
         }
@@ -123,8 +119,6 @@ public class Projectile : MonoBehaviour
         myTarget = null;
         this.gameObject.SetActive(false);
         mySphereCollider.radius = 0.5f;
-        //arDetectedEnemy.Clear();
-        //Debug.Log("arDetectedEnemy cleared.. now:" + arDetectedEnemy.Count);
         nCollideCount = 0;
         CancelInvoke();
     }

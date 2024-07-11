@@ -24,9 +24,9 @@ public class WaveManager : MonoBehaviour
     void Start()
     {
 
-        initWaveManager(3);
+        initWaveManager(8);
 
-        if(initGameWaveInfo(nLastWave, 5.0f))
+        if(initGameWaveInfo(nLastWave, 10.0f))
         {
             Debug.Log("initGameWaveInfo success..");
         }
@@ -34,10 +34,7 @@ public class WaveManager : MonoBehaviour
         {
             Debug.Log("initGameWaveInfo failed..");
         }
-
-        //fWaveStartDelayTime = arGameWaveList[nCurrentWave].fWaveStartDelaySecond;
         fWaveStartTime = calculateNextWaveDelaySecond();
-        //startWave();
     }
 
     // Update is called once per frame
@@ -64,7 +61,6 @@ public class WaveManager : MonoBehaviour
             fWaveStartTime = calculateNextWaveDelaySecond();
             fWaveDelayTime = 0f;
         }
-        //Debug.Log(fTime.ToString());
     }
 
     void initWaveManager(int nMaxWave)
@@ -101,19 +97,14 @@ public class WaveManager : MonoBehaviour
 
     public void startWave()
     {
-        //currentGameManager.nCurrentWave++;
-        //currentGameManager.addCurrentWaveNumber();
         nCurrentWave++;
         currentUIManager.updateCurrentWave();
-        //currentUIManager.textCurrentWave.text = nCurrentWave.ToString();
 
         int nWaveListIndex;
 
-        //nWaveListIndex = currentGameManager.getCurrentWaveNumber() - 1;
         nWaveListIndex = nCurrentWave - 1;
 
         nCurrentWaveMaxEnemyCount = arGameWaveList[nWaveListIndex].nCreateEnemyCount;
-        //currentGameManager.setMaxEnemyCount(nCurrentWaveMaxEnemyCount);
 
         InvokeRepeating("generateEnemy", 0.5f, 0.5f);
     }
@@ -125,10 +116,8 @@ public class WaveManager : MonoBehaviour
         testEnemy.name += nEnemyGeneratingCount.ToString();
         testEnemy.transform.position = new Vector3(-30.0f, 30.0f, -2.0f);
         nEnemyGeneratingCount++;
-       // nTotalEnemyCount++;
         currentGameManager.addLeftEnemyCount();
-        //int nWaveListIndex = currentGameManager.getCurrentWaveNumber() - 1;
-        //int nTempMaxEnemyCount = arGameWaveList[nWaveListIndex].nCreateEnemyCount;
+
         if (nEnemyGeneratingCount >= nCurrentWaveMaxEnemyCount)
         {
             CancelInvoke("generateEnemy");
@@ -140,19 +129,16 @@ public class WaveManager : MonoBehaviour
     public bool initGameWaveInfo(int nLastWaveCount, float fStartDelayTime)
     {
         int nWaveCount = 0;
-        //float fBufferTime = 5.0f;
         while (nWaveCount < nLastWaveCount)
         {
             Wave newWave = new Wave();
             newWave.nMyWaveNumber = nWaveCount;
-            newWave.nCreateEnemyCount = 2;
+            newWave.nCreateEnemyCount =6;
             nTotalEnemyCount += newWave.nCreateEnemyCount;
-            //newWave.fWaveStartDelaySecond = fBufferTime;
             newWave.fWaveStartDelaySecond = fStartDelayTime;
             arGameWaveList.Add(newWave);
             nWaveCount++;
         }
-        //Debug.Log("totalEnemyCount: " + nTotalEnemyCount);
         currentGameManager.setMaxEnemyCount(nTotalEnemyCount);
 
         if(fStartDelayTime <= 3)

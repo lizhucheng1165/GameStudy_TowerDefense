@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fCurrentHealth = 2.0f;
+        fCurrentHealth = 5.0f;
         fEnemySpeed = 0.2f;
         bShouldMove = true;
         nTargetLocationIndex = 0;
