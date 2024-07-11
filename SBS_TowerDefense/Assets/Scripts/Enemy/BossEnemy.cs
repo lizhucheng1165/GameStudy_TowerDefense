@@ -31,21 +31,22 @@ public class BossEnemy : Enemy
 
     void KillAllExistingEnemies()
     {
-        //foreach (Transform item in UIManager.Instance.enemyList)
-        //{
-        //    if (!item.TryGetComponent<BossEnemy>(out BossEnemy boss))
-        //    {
-        //        UIManager.Instance.enemyList.Remove(item);
-        //        Destroy(item.gameObject);
-        //    }
-        //}
-        //foreach (GameObject item in UIManager.Instance.HPBarList)
-        //{
-        //    if (!item.TryGetComponent<BossEnemy>(out BossEnemy boss))
-        //    {
-        //        UIManager.Instance.HPBarList.Remove(item);
-        //        Destroy(item);
-        //    }
-        //}
+        foreach (Transform item in new List<Transform>(UIManager.Instance.enemyList))
+        {
+            if (!item.TryGetComponent<BossEnemy>(out BossEnemy boss))
+            {
+                UIManager.Instance.enemyList.Remove(item);
+                Destroy(item.gameObject);
+            }
+        }
+
+        foreach (GameObject item in new List<GameObject>(UIManager.Instance.HPBarList))
+        {
+            if (!item.TryGetComponent<BossEnemy>(out BossEnemy boss))
+            {
+                UIManager.Instance.HPBarList.Remove(item);
+                Destroy(item);
+            }
+        }
     }
 }
