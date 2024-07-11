@@ -6,7 +6,9 @@ public enum EventBusType
 {
     GAMESTART, WAVE_START, WAVE_STOP, BREAKTIME_START, 
     BUY_TOWER, 
-    MONSTER_HIT, MONSTER_DEATH
+    MONSTER_HIT, MONSTER_DEATH,
+    SPAWN_FINALBOSS,
+    LOSE,WIN
 }
 
 public class EventBus : MonoBehaviour

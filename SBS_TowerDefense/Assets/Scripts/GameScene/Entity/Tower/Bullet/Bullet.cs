@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Bullet : MonoBehaviour
 {
@@ -39,7 +40,14 @@ public class Bullet : MonoBehaviour
     {
         //총알 움직임 로직
         if (m_tower != null)
+        {
             transform.position += m_targetTransform * m_speed * Time.deltaTime;
+            float distance = Vector3.Distance(transform.position, m_tower.transform.position);
+
+            if (distance > m_tower.maxRange)
+                Destroy(gameObject);
+        }
+
     }
 
     private IEnumerator FadeOut()

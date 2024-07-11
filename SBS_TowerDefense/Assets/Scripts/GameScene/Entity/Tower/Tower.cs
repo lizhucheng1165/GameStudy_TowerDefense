@@ -49,10 +49,18 @@ public class Tower : MonoBehaviour
     public bool IsControllable { get { return isControllable; } set { isControllable = value; } }
     public List<TowerModifier> modifiers { get { return m_modifiers; } set { m_modifiers = value; } }
 
+    private LineRenderer lineRenderer;
+
+
     public void Awake()
     {
+        lineRenderer = GetComponent<LineRenderer>();
+
         m_minRangeIndicatorPrefab = Resources.Load<GameObject>("Prefabs/Towers/Indicators/MinRangeIndicator");
         m_maxRangeIndicatorPrefab = Resources.Load<GameObject>("Prefabs/Towers/Indicators/MaxRangeIndicator");
+
+        m_minRangeIndicatorPrefab.tag = "Indicator";
+        m_maxRangeIndicatorPrefab.tag = "Indicator";
     }
 
     IEnumerator fire()  //멀티스레드
@@ -85,18 +93,39 @@ public class Tower : MonoBehaviour
     private bool FindTarget()
     {
         // 사정거리 내에 있는 몬스터를 찾는다
-        Collider[] colliders = Physics.OverlapSphere(transform.position, m_maxRange);
+        Collider[] colliders =Physics.OverlapSphere(transform.position, m_maxRange);
+        List<Collider> inRangeColliders = new List<Collider>();
 
-        if (colliders == null || colliders.Length <= 0)
+        //사거리 내 몬스터만 가져옴
+        foreach (Collider item in colliders)
+        {
+            if (item.CompareTag("Monster"))
+            {
+                float distance = Vector3.Distance(transform.position, item.transform.position);
+                if (distance <= m_maxRange && distance > m_minRange)
+                    inRangeColliders.Add(item);
+            }
+        }
+
+        //대상이 하나인 경우, 없는경우 처리
+        if (inRangeColliders.Count <= 0)
+        {
+            target = null;
             return false;
+        }
+        else if (inRangeColliders.Count == 1)
+        {
+            target = inRangeColliders[0].transform;
+            return false;
+        }
 
-        firstDistance = Vector3.Distance(transform.position, colliders[0].transform.position);
+        firstDistance = Vector3.Distance(transform.position, inRangeColliders[0].transform.position);
 
         if (target != null)
         {
             // 기존 타겟이 여전히 사정거리 내에 있는지 확인
             float distance = Vector3.Distance(transform.position, target.transform.position);
-            if (distance <= m_maxRange)
+            if (distance <= m_maxRange && distance > m_minRange)
                 return true;
             else
             {
@@ -105,30 +134,27 @@ public class Tower : MonoBehaviour
             }
         }
 
-        foreach (Collider collider in colliders)
+        //우선순위
+        foreach (Collider item in inRangeColliders)
         {
-            // 몬스터 태그가 붙은 게임 오브젝트를 찾는다
-            if (collider.CompareTag("Monster"))
-            {
-                Monster monster = collider.GetComponent<Monster>();
-                float distance = Vector3.Distance(transform.position, collider.transform.position);
+            Monster monster = item.GetComponent<Monster>();
+            float distance = Vector3.Distance(transform.position, item.transform.position);
 
-                // 우선순위 타겟 타입과 사정거리에 부합하는 경우 target으로 설정한다
-                if (priorityTargetRange == Enums.RangeType.Short)
+            // 우선순위 타겟 타입과 사정거리에 부합하는 경우 target으로 설정한다
+            if (priorityTargetRange == Enums.RangeType.Short)
+            {
+                if (distance < firstDistance)
                 {
-                    if (distance < firstDistance)
-                    {
-                        firstDistance = distance;
-                        target = collider.transform;
-                    }
+                    firstDistance = distance;
+                    target = item.transform;
                 }
-                else if (priorityTargetRange == Enums.RangeType.Long)
+            }
+            else if (priorityTargetRange == Enums.RangeType.Long)
+            {
+                if (distance > firstDistance)
                 {
-                    if (distance > firstDistance)
-                    {
-                        firstDistance = distance;
-                        target = collider.transform;
-                    }
+                    firstDistance = distance;
+                    target = item.transform;
                 }
             }
         }
@@ -149,6 +175,8 @@ public class Tower : MonoBehaviour
         if (target != null)
         {
             transform.LookAt(target);
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, target.position);
         }
     }
 

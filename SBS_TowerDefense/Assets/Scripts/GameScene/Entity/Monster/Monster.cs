@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Monster : MonoBehaviour
@@ -40,6 +41,8 @@ public class Monster : MonoBehaviour
     private float m_healthBarDuration = 2f;
     private float m_damageDuration = 0.7f;
 
+    private bool m_isDead = false;
+
     private void Awake()
     {
         waypoints = new Transform[4];
@@ -54,7 +57,7 @@ public class Monster : MonoBehaviour
         m_healthBarFront.enabled = false;
         m_healthBarBack.enabled = false;
         m_tmpDamage.enabled = false;
-
+        EventBus.Subscribe(EventBusType.SPAWN_FINALBOSS, Death);
     }
 
     private void Update()
@@ -75,48 +78,80 @@ public class Monster : MonoBehaviour
 
     public float TakeDamage(Bullet bullet)
     {
-        float finalDamage = calcCritDamage((bullet.damage - (bullet.damage * m_damageReduceMultiplier) - m_armor), bullet.critcalChance, bullet.criticalDamageMultiplier);
-        if (finalDamage <= 0)
-            finalDamage = 1;
-        m_currentHealth -= finalDamage;
-        float updatedHealthBarSizeX = m_healthBarFront.rectTransform.sizeDelta.x * (m_currentHealth / m_maxHealth);
+        if (m_isDead)
+            return 0;
 
-        if (updatedHealthBarSizeX >= 0)
-            m_healthBarFront.rectTransform.sizeDelta = new Vector2(updatedHealthBarSizeX, m_healthBarFront.rectTransform.sizeDelta.y);
+        float finalDamage = calcCritDamage((bullet.damage - (bullet.damage * m_damageReduceMultiplier) - m_armor), bullet.critcalChance, bullet.criticalDamageMultiplier);
+
+        m_currentHealth -= finalDamage;
 
         StartCoroutine(ShowImage(m_healthBarDuration, m_healthBarBack));
         StartCoroutine(ShowImage(m_healthBarDuration, m_healthBarFront));
         StartCoroutine(ShowTMP(m_damageDuration, m_tmpDamage));
+        StartCoroutine(RegenerationHealth());
 
         if (m_currentHealth < 0)
+        {
             Death();
+        }
         return finalDamage;
+    }
+    
+    private void updateHealthBar()
+    {
+        float healthBarXSize = m_healthBarBack.rectTransform.sizeDelta.x;
+        float updatedHealthBarSizeX = healthBarXSize * (m_currentHealth / m_maxHealth);
+
+        if (updatedHealthBarSizeX >= 0)
+            m_healthBarFront.rectTransform.sizeDelta = new Vector2(updatedHealthBarSizeX, m_healthBarFront.rectTransform.sizeDelta.y);
     }
 
     private float calcCritDamage(float damage, float towerCritChance, float towerCritDamage)
     {
         float finalDamage = damage;
         float critChance = Random.Range(0f, 1f);
+        bool isCrit = false;
+
+
+        if (critChance <= towerCritChance)
+        {
+            isCrit = true;
+            finalDamage = damage * towerCritDamage;
+        }
+
+        if (finalDamage <= 0)
+            finalDamage = 1;
+
+        updateDamageTmp(isCrit, finalDamage);
+
+        return finalDamage;
+    }
+
+    private void updateDamageTmp(bool isCrit, float finalDamage)
+    {
+        if (isCrit)
+        {
+            m_tmpDamage.text = string.Format("{0:F0}", finalDamage) + "!!";
+            m_tmpDamage.color = new Color(1f, 0.3f, 0, 1);
+            m_tmpDamage.fontStyle = FontStyles.Bold | FontStyles.Italic;
+            return;
+        }
 
         m_tmpDamage.text = string.Format("{0:F0}", finalDamage);
         m_tmpDamage.color = Color.white;
         m_tmpDamage.fontStyle = 0;
 
-        if (critChance <= towerCritChance)
-        {
-            finalDamage = damage * towerCritDamage;
-            m_tmpDamage.text = string.Format("{0:F0}", finalDamage) + "!!";
-            m_tmpDamage.color = new Color(1f, 0.3f, 0, 1);
-            m_tmpDamage.fontStyle = FontStyles.Bold | FontStyles.Italic;
-        }
-
-        return finalDamage;
     }
 
     private void Death()
     {
+        if (monsterId == 1000)
+            SceneManager.LoadScene("End");
+
+        m_isDead = true;
         EventBus.Publish(EventBusType.MONSTER_DEATH);
-        Destroy(gameObject);
+        if (GameInstance.Instance.gameManager.GetComponent<GameManager>().spawnedMonsters.Remove(this))
+            Destroy(gameObject);  //Destroy(gameObject);
     }
 
     IEnumerator ShowTMP(float duration, TextMeshProUGUI tmp)
@@ -142,6 +177,22 @@ public class Monster : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-        image.enabled = true;
+        image.enabled = false;
+    }
+
+    IEnumerator RegenerationHealth()
+    {
+        while (!m_isDead)
+        {
+            if (m_currentHealth > maxHealth)
+            {
+                m_currentHealth = maxHealth;
+                continue;
+            }
+            m_currentHealth += m_healthRegeneration / 10;
+            updateHealthBar();
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }

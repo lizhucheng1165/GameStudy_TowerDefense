@@ -15,16 +15,4 @@ public class Wave : MonoBehaviour
     public int spawnMonsterId { get { return m_spawnMonsterId; } set { m_spawnMonsterId = value; } }
     public int spawnCount { get { return m_spawnCount; } set { { m_spawnCount = value; } } }
     public float spawnInterval { get { return m_spawnInterval; } set { { m_spawnInterval = value; } } }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
