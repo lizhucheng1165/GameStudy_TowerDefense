@@ -34,7 +34,10 @@ public class GameManager : Singleton<GameManager>
         }
         set 
         {
-            enemyCount = value;
+            if (value >= 0)
+            {
+                enemyCount = value;
+            }
             UIManager.Instance.SetEnemyCountText();
         }
     }
@@ -72,8 +75,18 @@ public class GameManager : Singleton<GameManager>
         HandleGameState();
     }
     void InitalizeMainMap() { }
-    void GameWin() { }
-    void GameLose() { }
+    public void GameWin()
+    {
+        print("½Â¸®");
+        currentGameState = GameState.GAME_WON;
+        SceneLoder.Instance.MoveToResultScene(currentGameState);
+    }
+    public void GameLose()
+    {
+        print("ÆÐ¹è");
+        currentGameState = GameState.GAME_LOSE;
+        SceneLoder.Instance.MoveToResultScene(currentGameState);
+    }
 
     void HandleGameState()
     {

@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class BossEnemy : Enemy
 {
+    public float timeToDefeat = 30;
+    public float TimeToDefeat 
+    {
+        get
+        { 
+            return timeToDefeat; 
+        }
+        set 
+        {
+            timeToDefeat = value;
+            UIManager.Instance.ShowRemainingTimeToDefeat(timeToDefeat); 
+        }
+    }
+
+
     private void Awake()
     {
         GetWayPointsList();
@@ -22,6 +37,8 @@ public class BossEnemy : Enemy
     private void OnEnable()
     {
         KillAllExistingEnemies();
+        UIManager.Instance.timeToDefeatText.gameObject.SetActive(true);
+        StartCoroutine(CheckTimeUntilDefeat());
     }
 
     void AddTotalHelth(int currentHealth)
@@ -47,6 +64,29 @@ public class BossEnemy : Enemy
                 UIManager.Instance.HPBarList.Remove(item);
                 Destroy(item);
             }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.Instance.currentGameState == GameState.PLAYING)
+        {
+            GameManager.Instance.GameWin();
+        }
+    }
+
+    IEnumerator CheckTimeUntilDefeat()
+    {
+        while (true)
+        {
+            TimeToDefeat -= Time.deltaTime;
+            if (TimeToDefeat < 0)
+            {
+                GameManager.Instance.GameLose();
+                yield break;
+            }
+
+            yield return null;
         }
     }
 }

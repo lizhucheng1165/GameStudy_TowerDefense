@@ -28,6 +28,8 @@ public class EnemySpawner : MonoBehaviour
         }
     }
     public float waveElapsedTime;
+
+
     private void Awake()
     {
         WaveIndex = 0;
@@ -111,7 +113,6 @@ public class EnemySpawner : MonoBehaviour
     private void AddWaveIndex()
     {
         WaveIndex++;
-        print("웨이브 인덱스 증가 : " + WaveIndex);
     }
 
     private GameObject GetWavePrefab()

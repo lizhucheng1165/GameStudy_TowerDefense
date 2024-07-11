@@ -145,9 +145,6 @@ public class Enemy : MonoBehaviour, InterFaces.IEnemy
         Destroy(this.gameObject);
     }
 
-    private void OnDestroy()
-    {
-        
-    }
+    
 }
 

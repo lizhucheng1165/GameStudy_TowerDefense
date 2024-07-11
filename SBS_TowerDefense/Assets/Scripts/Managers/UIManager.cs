@@ -9,6 +9,7 @@ public class UIManager : Singleton<UIManager>
     public Text enemyCountText;
     public Text cancleText;
     public Text[] towerInfos;
+    public Text timeToDefeatText;
 
     public GameObject HPBarPrefab;
     public List<Transform> enemyList = new List<Transform>();
@@ -78,5 +79,10 @@ public class UIManager : Singleton<UIManager>
         enemyList.Remove(enemy);
         HPBarList.Remove(hpBar);
         Destroy(hpBar);
+    }
+
+    public void ShowRemainingTimeToDefeat(float time)
+    {
+        timeToDefeatText.text = "패배까지 " + (int)time + "초 남았습니다";
     }
 }
