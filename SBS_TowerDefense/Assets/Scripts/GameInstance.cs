@@ -20,6 +20,7 @@ public class GameInstance : Singleton<GameInstance>
     [SerializeField] private WaveConfig m_waveConfig;
     [SerializeField] private RatingColorConfig m_ratingColorConfig;
     [SerializeField] private RatingTextConfig m_ratingTextConfig;
+    [SerializeField] private GlobalConfig m_globalConfig;
 
     [SerializeField] private GameObject m_tilePrefab;
     public GameObject tilePrefab { get { return m_tilePrefab; } }
@@ -44,6 +45,7 @@ public class GameInstance : Singleton<GameInstance>
     public WaveConfig waveConfig { get { return m_waveConfig; } set { m_waveConfig = value; } }
     public RatingColorConfig ratingColorConfig { get { return m_ratingColorConfig; } set { m_ratingColorConfig = value; } }
     public RatingTextConfig ratingTextConfig { get { return m_ratingTextConfig; } set { m_ratingTextConfig = value; } }
+    public GlobalConfig globalConfig { get { return m_globalConfig; } set { m_globalConfig = value; } }
     
     private void Start()
     {

@@ -31,8 +31,10 @@ public class GameManager : MonoBehaviour
         //m_gameUIManager.timerUI = GameInstance.Instance.gameUIManager.GetComponent<GameUIManager>().timerUI;
         //m_tmpMonsterCount = GameInstance.Instance.gameUIManager.GetComponent<GameUIManager>().monsterCountUI;
         m_player = new Player();
-        m_player.money = 100;
+        m_player.money = GameInstance.Instance.globalConfig.startMoney;
+
         m_maxMonsterCount = 100;
+
         m_tileFactory = new TileFactory(GameInstance.Instance.tilePrefab.GetComponent<Tile>());
         m_monsterFactory = new MonsterFactory();
         m_towerFactory = new TowerFactory();
@@ -100,7 +102,7 @@ public class GameManager : MonoBehaviour
 
     private void spawnFinalBoss()
     {
-        float bossHealth = 1000 * GameInstance.Instance.difficulty;
+        float bossHealth = GameInstance.Instance.globalConfig.finalBossBaseHealth * GameInstance.Instance.difficulty;
 
         foreach (Monster monster in m_spawnedMonsters)
         {
@@ -118,7 +120,7 @@ public class GameManager : MonoBehaviour
     private void breakTimeStart()
     {
         m_gameUIManager.changeTimerUIColor(new Color(0, 0, 0));
-        StartCoroutine(SetTimer(3, EventBusType.BREAKTIME_START));
+        StartCoroutine(SetTimer(GameInstance.Instance.globalConfig.breakTimeLength, EventBusType.BREAKTIME_START));
     }
 
     /// <summary>
@@ -130,17 +132,22 @@ public class GameManager : MonoBehaviour
         if (GameInstance.Instance.currentWave == GameInstance.Instance.waveConfig.waves.Count)
         {
             spawnFinalBoss();
-            StartCoroutine(SetTimer(60, EventBusType.SPAWN_FINALBOSS));
+            StartCoroutine(SetTimer(GameInstance.Instance.globalConfig.finalBossTimeLength, EventBusType.SPAWN_FINALBOSS));
             return;
         }
 
         GameInstance.Instance.currentWave++;
         GameInstance.Instance.bestWave++;
+        if (GameInstance.Instance.currentWave != 1)
+        {
+            player.money += 50 + GameInstance.Instance.currentWave * 10;
+            m_gameUIManager.setMoneyUI(player.money);
+        }
 
         m_gameUIManager.changeTimerUIColor(new Color(255, 255, 255));
         m_gameUIManager.setWaveUI(GameInstance.Instance.currentWave);
 
-        timerCoroutine = StartCoroutine(SetTimer(10, EventBusType.WAVE_START));
+        timerCoroutine = StartCoroutine(SetTimer(GameInstance.Instance.globalConfig.waveTimeLength, EventBusType.WAVE_START));
 
         WaveConfig waveConfig = GameInstance.Instance.waveConfig;
 
@@ -156,10 +163,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void buyTower()
     {
-        if (m_player.money >= 1)
+        if (m_player.money >= 100)
         {
             Tile selectedTile = m_gameUIManager.selectedTile.GetComponent<Tile>();
-            m_player.money -= 1;
+            m_player.money -= 100;
 
             m_towerFactory.SpawnRandomTowerOfRating(selectedTile, 1);
             m_gameUIManager.setMoneyUI(m_player.money);
@@ -216,7 +223,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void monsterReward()
     {
-        m_player.money += 5 + GameInstance.Instance.currentWave;
+        m_player.money += 3 + GameInstance.Instance.currentWave / 2;
         m_gameUIManager.setMonsterCountUI(m_spawnedMonsters.Count, m_maxMonsterCount);
         m_gameUIManager.setMoneyUI(m_player.money);
     }

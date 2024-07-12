@@ -85,8 +85,9 @@ public class Tower : MonoBehaviour
                         spawnBullet.targetTransform = randomRotation * transform.forward;
                     }
                 }
+                yield return new WaitForSeconds(1f / (m_rpm / 60f));
             }
-            yield return new WaitForSeconds(1 / (m_rpm / 60));
+            yield return new WaitForSeconds(0.01f);
         }
     }
 
