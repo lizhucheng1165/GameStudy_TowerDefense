@@ -176,15 +176,15 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 타입과 등급이 같은 가장 가까운 타워 조합 (조합가능한 타워가 3개 이상이거나 같은 거리에있는게 많은경우 버그발생)
     /// </summary>
-    /// <param name="tower"></param>
-    public void combineTower(Tower tower)
+    /// <param name="inputTower"></param>
+    public void combineTower(Tower inputTower)
     {
-        Tile parentTile = tower.transform.GetComponentInParent<Tile>();
+        Tile parentTile = inputTower.transform.GetComponentInParent<Tile>();
         GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Tower");
 
         for (int i = 0; i < gameObjects.Length; i++) 
         {
-            if (gameObjects[i].GetComponent<Tower>() == tower)
+            if (gameObjects[i].GetComponent<Tower>() == inputTower)
             {
                 List<GameObject> list = gameObjects.ToList();
                 list.RemoveAt(i);
@@ -195,26 +195,34 @@ public class GameManager : MonoBehaviour
         if (gameObjects.Length <= 0)
             return;
 
-        Tower closestTower = gameObjects[0].GetComponent<Tower>();
-        float closestDistance = Vector3.Distance(tower.transform.position, closestTower.transform.position);
-
-        foreach (GameObject gameObject in gameObjects) 
+        List<Tower> combineableTowers = new List<Tower>();
+        foreach (GameObject gameObject in gameObjects)
         {
             Tower comparativeTower = gameObject.GetComponent<Tower>();
 
-            if (comparativeTower.rating == tower.rating && comparativeTower.type == tower.type)
-            {
-                float distance = Vector3.Distance(tower.transform.position, comparativeTower.transform.position);
+            if (inputTower.rating == comparativeTower.rating && inputTower.type == comparativeTower.type)
+                combineableTowers.Add(comparativeTower);
 
-                if (closestDistance > distance)
-                {
-                    closestDistance = distance;
-                    closestTower = comparativeTower;
-                }
-                Destroy(tower.gameObject);
-                Destroy(closestTower.gameObject);
-                m_towerFactory.SpawnRandomTowerOfRating(parentTile, tower.rating+1);
+        }
+
+        if (combineableTowers.Count <= 0)
+            return;
+
+        Tower closestTower = combineableTowers[0];
+        float closestDistance = Vector3.Distance(inputTower.transform.position, closestTower.transform.position);
+
+        foreach (Tower combineableTower in combineableTowers)
+        {
+            float distance = Vector3.Distance(inputTower.transform.position, combineableTower.transform.position);
+
+            if (closestDistance > distance)
+            {
+                closestDistance = distance;
+                closestTower = combineableTower;
             }
+            Destroy(inputTower.gameObject);
+            Destroy(closestTower.gameObject);
+            m_towerFactory.SpawnRandomTowerOfRating(parentTile, inputTower.rating + 1);
         }
     }
 
