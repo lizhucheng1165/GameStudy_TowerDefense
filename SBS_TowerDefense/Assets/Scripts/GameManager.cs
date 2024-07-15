@@ -8,29 +8,16 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static GameManager instance;
+    public static bool playerWon;
     private float startTime = 3f;
-    private int enemyCount = 0;
-    private int maxEnemies = 5;
+    
     [SerializeField] private TextMeshProUGUI enemyCountText;
-    [SerializeField] private TextMeshProUGUI startText;
     [SerializeField] private TextMeshProUGUI startCountdownText;
     [SerializeField] private TextMeshProUGUI endText;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    [SerializeField] private TextMeshProUGUI waveCountText;
     void Start()
     {
+        startCountdownText.gameObject.SetActive(true);
         endText.gameObject.SetActive(false);
     }
 
@@ -41,13 +28,10 @@ public class GameManager : MonoBehaviour
             StartCountdown();
         }
 
-        if(enemyCount > 0) ShowEnemyCount();
-        if(enemyCount >= maxEnemies) EndGame();
+        ShowEnemyCount();
     }
 
-    public void IncreaseEnemyCount() {
-        enemyCount++;
-    }
+    
 
     public void StartCountdown() {
         startTime -= Time.deltaTime;
@@ -56,14 +40,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void ShowEnemyCount() {
-        startText.gameObject.SetActive(false);
-        enemyCountText.text = "Enemies: \n" + enemyCount.ToString();
-        
+        enemyCountText.text = "Enemies: \n" + WaveManager.enemyCount.ToString();
     }
 
-    public void EndGame() {
-        enemyCount = 0;
-        enemyCountText.gameObject.SetActive(false);
+    public static void EndGame(bool won)
+    {
+        playerWon = won;
         SceneManager.LoadScene("EndScene");
     }
 }
